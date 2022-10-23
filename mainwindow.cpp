@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
+#include "startinginfo.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -36,5 +37,13 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+
+void MainWindow::on_lineEdit_returnPressed()
+{
+    StartingInfo budget;
+    budget.setModal(true); //model approach, the second window must be closed in order to access the first
+    budget.exec();
 }
 

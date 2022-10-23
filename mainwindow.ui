@@ -17,13 +17,45 @@
    <widget class="QFrame" name="horizontalFrame">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>90</y>
+      <x>50</x>
+      <y>120</y>
       <width>711</width>
       <height>461</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout"/>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>40</y>
+      <width>241</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLineEdit {
+	border: 2px solid rgb(37, 39, 48);
+	border -radius: 20px;
+	color: #FFF;
+	padding -left: 20px;
+	padding -right: 20px;
+	background-color: rgb(34,36,44);
+}
+QLineEdit:hover{
+	border: 2px solid rgb(48,50,62);
+}
+QLineEdit:focus{
+border: 2px solid rgb(85,170,255);
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="placeholderText">
+     <string>Enter Budget</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

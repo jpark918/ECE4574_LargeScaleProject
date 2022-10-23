@@ -31,11 +31,18 @@ QString getInput(){
 int main(int argc, char *argv[])
 {
 
-    QString input = getInput();
+    //QString input = getInput();
+    std::string input;
     // qPrintable() because cout can't handle QStrings
 
-    std::cout << "Enter budget (for month): " << qPrintable(input) << std::endl;
-    qDebug() << "Test";
+    //std::cout << "Enter budget (for month): " << qPrintable(input) << std::endl;
+    std::cout << "Enter budget (for month): " << input << std::endl;
+    //std::cout << "Enter budget (for month): " << std::endl;
+    qDebug() << "Hello";
+
+
+
+
 
    QApplication a(argc, argv);
    MainWindow w;

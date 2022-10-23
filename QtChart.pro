@@ -11,13 +11,16 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    startinginfo.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    startinginfo.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    startinginfo.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
