@@ -40,10 +40,6 @@ int main(int argc, char *argv[])
     //std::cout << "Enter budget (for month): " << std::endl;
     qDebug() << "Hello";
 
-
-
-
-
    QApplication a(argc, argv);
    MainWindow w;
     w.show();
@@ -54,16 +50,39 @@ int main(int argc, char *argv[])
    QBarSet *set2 = new QBarSet("Disney+");
    QBarSet *set3 = new QBarSet("HBO");
 
+   //dup
+   QBarSet *set4 = new QBarSet("Housing");
+   QBarSet *set5 = new QBarSet("Groceries");
+   QBarSet *set6 = new QBarSet("Outings");
+   QBarSet *set7 = new QBarSet("Personal Expenses");
+
    *set0 << 283 << 341 << 313 << 338 << 346 << 335;
    *set1 << 250 << 315 << 282 << 307 << 303 << 330;
    *set2 << 294 << 246 << 257 << 319 << 300 << 325;
    *set3 << 248 << 244 << 265 << 281 << 278 << 313;
 
-   QBarSeries *series = new QBarSeries();
+   //previous
+   *set4 << 2000 << 570 << 150 << 120;
+   *set5 << 1000 << 303 << 300 << 90;
+   *set6 << 900 << 230 << 600 << 60;
+   *set7 << 200 << 120 << 900 << 20;
+
+   QBarSeries *series = new QBarSeries();  
+
+   //dup spent
+   QBarSeries *series2 = new QBarSeries();
+
    series->append(set0);
    series->append(set1);
    series->append(set2);
    series->append(set3);
+
+   //dup
+   series2->append(set4);
+   series2->append(set5);
+   series2->append(set6);
+   series2->append(set7);
+
    QChart *chart = new QChart();
    chart->addSeries(series);
    chart->setTitle("Avg visits by Month");
@@ -88,5 +107,31 @@ int main(int argc, char *argv[])
    QMainWindow window;
    window.setCentralWidget(chartView);
    window.show();
+
+   //dup
+   QChart *chart2 = new QChart();
+   chart2->addSeries(series2);
+   chart2->setTitle("Monthly expenditures");
+   chart2->setAnimationOptions(QChart::AllAnimations);
+   QStringList categories2;
+   categories2 << "Jan" << "Feb" << "Mar" << "Apr";
+   QBarCategoryAxis *axis2 = new QBarCategoryAxis();
+   axis2->append(categories2);
+   chart2->createDefaultAxes();
+   chart2->setAxisX(axis2, series2);
+   chart2->legend()->setVisible(true);
+   chart2->legend()->setAlignment(Qt::AlignBottom);
+
+   QChartView *chartView2 = new QChartView(chart2);
+   chartView2->setRenderHint(QPainter::Antialiasing);
+   QPalette pal2 = qApp->palette();
+   pal2.setColor(QPalette::Window, QRgb(0xffffff));
+   pal2.setColor(QPalette::WindowText, QRgb(0x404040));
+   qApp->setPalette(pal2);
+   QMainWindow window2;
+   window2.setCentralWidget(chartView2);
+   window2.show();
+    //end dup
+
    return a.exec();
 }

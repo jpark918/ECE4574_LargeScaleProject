@@ -54,7 +54,7 @@ border: 2px solid rgb(85,170,255);
      <string/>
     </property>
     <property name="placeholderText">
-     <string>Enter Budget</string>
+     <string>Enter spent amount</string>
     </property>
    </widget>
   </widget>
