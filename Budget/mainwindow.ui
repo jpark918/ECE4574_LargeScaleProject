@@ -37,13 +37,6 @@
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="1" column="1">
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>You have spent $570.00/$700.00 of your budget for groceries</string>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="0">
         <widget class="QLabel" name="label_2">
          <property name="text">
@@ -51,10 +44,10 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="label_3">
+       <item row="3" column="1">
+        <widget class="QLabel" name="label_8">
          <property name="text">
-          <string>You have spent $2000.00/$2000.00 of your budget for housing</string>
+          <string>You have spent $120.00/$200.00 of your budget on personal expenses</string>
          </property>
         </widget>
        </item>
@@ -62,6 +55,27 @@
         <widget class="QLabel" name="label_5">
          <property name="text">
           <string>Outings:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>Personal Expenses:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>You have spent $570.00/$700.00 of your budget for groceries</string>
          </property>
         </widget>
        </item>
@@ -79,20 +93,6 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_7">
-         <property name="text">
-          <string>Personal Expenses:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLabel" name="label_8">
-         <property name="text">
-          <string>You have spent $120.00/$200.00 of your budget on personal expenses</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="horizontalLayoutWidget">
@@ -105,13 +105,6 @@
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QPushButton" name="pushButton_8">
-         <property name="text">
-          <string>Connect</string>
-         </property>
-        </widget>
-       </item>
        <item>
         <widget class="QPushButton" name="pushButton">
          <property name="text">
@@ -143,22 +136,16 @@
         <x>20</x>
         <y>30</y>
         <width>471</width>
-        <height>118</height>
+        <height>151</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_12">
+       <item row="4" column="2">
+        <widget class="QPushButton" name="pushButton_7">
          <property name="text">
-          <string>Outings:</string>
+          <string>Done</string>
          </property>
         </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="lineEdit"/>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="lineEdit_2"/>
        </item>
        <item row="0" column="0" colspan="2">
         <widget class="QLabel" name="label_9">
@@ -167,42 +154,11 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_11">
-         <property name="text">
-          <string>Groceries:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_13">
-         <property name="text">
-          <string>Personal Expenses:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_10">
-         <property name="text">
-          <string>Housing:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="lineEdit_3"/>
-       </item>
        <item row="4" column="1">
         <widget class="QLineEdit" name="lineEdit_4"/>
        </item>
        <item row="1" column="2">
         <widget class="QPushButton" name="pushButton_4">
-         <property name="text">
-          <string>Done</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="2">
-        <widget class="QPushButton" name="pushButton_5">
          <property name="text">
           <string>Done</string>
          </property>
@@ -215,8 +171,141 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="2">
-        <widget class="QPushButton" name="pushButton_7">
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>Outings:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_10">
+         <property name="text">
+          <string>Housing:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_13">
+         <property name="text">
+          <string>Personal Expenses:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QPushButton" name="pushButton_5">
+         <property name="text">
+          <string>Done</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="lineEdit_3"/>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="lineEdit_2"/>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="lineEdit"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>Groceries:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QPushButton" name="pushButton_8">
+         <property name="text">
+          <string>Back</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_3">
+     <widget class="QWidget" name="gridLayoutWidget_3">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>10</y>
+        <width>391</width>
+        <height>151</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_16">
+         <property name="text">
+          <string>Purchase Amount:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QComboBox" name="comboBox">
+         <item>
+          <property name="text">
+           <string>Housing</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Outtings</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Personal</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Groceries</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_15">
+         <property name="text">
+          <string>Name of Purchase:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="lineEdit_7"/>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="label_17">
+         <property name="text">
+          <string>Category:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLineEdit" name="lineEdit_6"/>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLineEdit" name="lineEdit_5"/>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_14">
+         <property name="text">
+          <string>Date of Transaction:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QPushButton" name="pushButton_10">
+         <property name="text">
+          <string>Back</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QPushButton" name="pushButton_9">
          <property name="text">
           <string>Done</string>
          </property>
@@ -225,7 +314,6 @@
       </layout>
      </widget>
     </widget>
-    <widget class="QWidget" name="page_3"/>
     <widget class="QWidget" name="page_4"/>
    </widget>
   </widget>
@@ -238,6 +326,12 @@
      <height>17</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuBudget_Tracker">
+    <property name="title">
+     <string>Budget Tracker</string>
+    </property>
+   </widget>
+   <addaction name="menuBudget_Tracker"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

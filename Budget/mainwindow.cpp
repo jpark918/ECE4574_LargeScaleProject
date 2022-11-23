@@ -43,19 +43,18 @@ void MainWindow::on_pushButton_4_clicked()
 
 void MainWindow::on_pushButton_8_clicked()
 {
-    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName("127.0.0.1");
-    db.setDatabaseName("budgetWatcherDb");
-    db.setUserName("admin");
-    db.setPassword("vtece4574");
+    ui->stackedWidget->setCurrentIndex(0);
+}
 
-    if (db.open())
-    {
-        QMessageBox ::information(this, "Connection", "Database connected");
-    }
-    else
-    {
-        QMessageBox ::information(this, "Not Connected", "Database not connected");
-    }
+
+void MainWindow::on_pushButton_10_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
+
+void MainWindow::on_label_linkActivated(const QString &link)
+{
+
 }
 
