@@ -53,8 +53,4 @@ void MainWindow::on_pushButton_10_clicked()
 }
 
 
-void MainWindow::on_label_linkActivated(const QString &link)
-{
-
-}
 
