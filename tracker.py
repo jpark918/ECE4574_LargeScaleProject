@@ -1,5 +1,6 @@
 import os
 import sqlite3
+import json
 
 
 printGood = False # global variable to help validate if a string should be printed
@@ -56,6 +57,7 @@ if os.path.exists("subscription.txt") == False:
 file = open("subscription.txt","a")
 
 keywords_url = ["watch", "songs","playlist", "albums", "album", "station", "genre"]
+thisdict = {}
 for row0 in cur.execute("SELECT url, domain_expansion, visit_count FROM history_items"):
     if row0[1] == "netflix" or row0[1] == "music.apple" or row0[1] == "open.spotify":
         for key in keywords_url:
@@ -64,7 +66,17 @@ for row0 in cur.execute("SELECT url, domain_expansion, visit_count FROM history_
                 # print(url_str.find(key)) # will keep for testing purpose
                 line = convertTuple(row0)
                 if printGood == True:
-                    file.write(line + "\n")
+#                    map_res = map(row0[1], row0[2])
+                    if row0[1] in thisdict.keys():
+                        val = thisdict[row0[1]]
+                        update_val = val + row0[2]
+                        thisdict[row0[1]] = update_val
+                    else:
+                        thisdict.update({row0[1]: row0[2]})
+                    print(thisdict)
+
+file.write(json.dumps(thisdict))
+                    #file.write(line + "\n")
 file.close()
 # Be sure to close the connection
 con.close()
