@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtChart import *
 from PyQt5 import uic
 from PyQt5.Qt import Qt
+import random
 import pymysql
 
 #Connect to db
@@ -19,29 +20,66 @@ class MyGUI(QMainWindow):
         uic.loadUi("mainwindow.ui", self) #Retrieves ui from qt creator
         self.updateHomescreen()
 
+        set0 = QBarSet('Netflix')
+        set1 = QBarSet('Spotify')
+        set2 = QBarSet('Apple Music')
+
+        set0.append([2, 6, 21, 10])
+        set1.append([20, 15, 18, 9])
+        set2.append([15, 18, 7, 21])
+
+        series = QBarSeries()
+        series.append(set0)
+        series.append(set1)
+        series.append(set2)
+
+        chart = QChart()
+        chart.addSeries(series)
+        chart.setTitle('Web Subscriptions')
+        chart.setAnimationOptions(QChart.SeriesAnimations)
+
+        months = ('Sept', 'Oct', 'Nov', 'Dec')
+        axisX = QBarCategoryAxis()
+        axisX.append(months)
+
+        axisY = QValueAxis()
+        axisY.setRange(0, 50)
+
+        chart.addAxis(axisX, Qt.AlignBottom)
+        chart.addAxis(axisY, Qt.AlignLeft)
+
+        chart.legend().setVisible(True)
+        chart.legend().setAlignment(Qt.AlignBottom)
+
+        chartView = QChartView(chart)
+        self.gridLayout_4.addWidget(chartView)
+
         #Edit budget button pressed
-        self.pushButton.clicked.connect(self.on_pushButton_clicked)
+        self.pushButton.clicked.connect(self.on_pushButton)
 
         #Enter transactions button
-        self.pushButton_2.clicked.connect(self.on_pushButton_2_clicked)
+        self.pushButton_2.clicked.connect(self.on_pushButton_2)
 
         #See transactions button
-        self.pushButton_3.clicked.connect(self.on_pushButton_3_clicked)
+        self.pushButton_3.clicked.connect(self.on_pushButton_3)
 
         #Back button on edit transactions
-        self.pushButton_8.clicked.connect(self.on_pushButton_8_clicked)
+        self.pushButton_8.clicked.connect(self.on_pushButton_8)
 
         #Back button on enter transactions
-        self.pushButton_10.clicked.connect(self.on_pushButton_10_clicked)
+        self.pushButton_10.clicked.connect(self.on_pushButton_10)
 
         #Done button on enter transactions-Housing
-        self.pushButton_4.clicked.connect(self.on_pushButton_4_clicked)
+        self.pushButton_4.clicked.connect(self.on_pushButton_4)
 
         #Done button on enter transactions-Groceries
-        self.pushButton_5.clicked.connect(self.on_pushButton_5_clicked)
+        self.pushButton_5.clicked.connect(self.on_pushButton_5)
 
         #Done button on enter transactions-Outtings
-        self.pushButton_6.clicked.connect(self.on_pushButton_6_clicked)
+        self.pushButton_6.clicked.connect(self.on_pushButton_6)
+
+        #Done button on add transaction
+        self.pushButton_9.released.connect(self.on_pushButton_9)
 
         #Sets size of window
         self.setGeometry(100, 100, 800, 300)
@@ -89,83 +127,66 @@ class MyGUI(QMainWindow):
         self.label_6.setText(outtings)
         self.label_8.setText(personal)
 
-        set0 = QBarSet('Netflix')
-        set1 = QBarSet('Spotify')
-        set2 = QBarSet('Apple Music')
-
-        set0.append([2, 6, 21, 10])
-        set1.append([20, 15, 18, 9])
-        set2.append([15, 18, 7, 21])
-
-        series = QBarSeries()
-        series.append(set0)
-        series.append(set1)
-        series.append(set2)
-
-        chart = QChart()
-        chart.addSeries(series)
-        chart.setTitle('Web Subscriptions')
-        chart.setAnimationOptions(QChart.SeriesAnimations)
-
-        months = ('Sept', 'Oct', 'Nov', 'Dec')
-        axisX = QBarCategoryAxis()
-        axisX.append(months)
-
-        axisY = QValueAxis()
-        axisY.setRange(0, 50)
-
-        chart.addAxis(axisX, Qt.AlignBottom)
-        chart.addAxis(axisY, Qt.AlignLeft)
-
-        chart.legend().setVisible(True)
-        chart.legend().setAlignment(Qt.AlignBottom)
-
-        chartView = QChartView(chart)
-        self.gridLayout_4.addWidget(chartView)
-        # self.setCentralWidget(chartView)
-
     #Sends us to edit budget screen
-    def on_pushButton_clicked(self):
+    def on_pushButton(self):
         self.stackedWidget.setCurrentIndex(1)
 
     #Sends us to enter transactions screen
-    def on_pushButton_2_clicked(self):
+    def on_pushButton_2(self):
         self.stackedWidget.setCurrentIndex(2)
 
     #Sends us to see transactions screen
-    def on_pushButton_3_clicked(self):
+    def on_pushButton_3(self):
         self.stackedWidget.setCurrentIndex(3)
 
     #Back button - edit transactions screen
-    def on_pushButton_8_clicked(self):
+    def on_pushButton_8(self):
         self.stackedWidget.setCurrentIndex(0)
     
     #Back button - enter transactions screen
-    def on_pushButton_10_clicked(self):
+    def on_pushButton_10(self):
         self.stackedWidget.setCurrentIndex(0)
     
     #Updates database to edit home budget
-    def on_pushButton_4_clicked(self):
+    def on_pushButton_4(self):
         new_budget = self.lineEdit.text()
         cursor.execute("UPDATE user_budget SET House_Budget = (%s) WHERE Customer_ID = 1;", new_budget)
         db.commit()
         self.updateHomescreen()
     #Updates database to edit groceries budget
-    def on_pushButton_5_clicked(self):
+    def on_pushButton_5(self):
         new_budget = self.lineEdit_2.text()
         cursor.execute("UPDATE user_budget SET Groceries_Budget = (%s) WHERE Customer_ID = 1;", new_budget)
         db.commit()
         self.updateHomescreen()
     #Updates database to edit outtings budget
-    def on_pushButton_6_clicked(self):
+    def on_pushButton_6(self):
         new_budget = self.lineEdit_3.text()
         cursor.execute("UPDATE user_budget SET Outtings_Budget = (%s) WHERE Customer_ID = 1;", new_budget)
         db.commit()
         self.updateHomescreen()
     #Updates database to edit personal budget
-    def on_pushButton_7_clicked(self):
+    def on_pushButton_7(self):
         new_budget = self.lineEdit_4.text()
         cursor.execute("UPDATE user_budget SET Personal_Budget = (%s) WHERE Customer_ID = 1;", new_budget)
+        db.commit()
+        self.updateHomescreen()
+
+    #creates new purchase
+    def on_pushButton_9(self):
+        comboBox_map= {0: "Housing",
+                        1: "Outtings",
+                        2: "Personal",
+                        3: "Groceries"}
+        purchase_id = random.randint(1000, 9999)
+        date = self.lineEdit_5.text()
+        name = self.lineEdit_6.text()
+        amount = self.lineEdit_7.text()
+        p_type = comboBox_map[self.comboBox.currentIndex()]
+        print(p_type)
+        val = (purchase_id, 1, p_type, date, name, amount)
+        cursor.execute("INSERT INTO customer_purchases (purchase_id, customer_id, purchase_type, purchase_date, purchase_name, purchase_amount) VALUES ((%s), (%s), (%s), (%s), (%s), (%s));", 
+        val)
         db.commit()
         self.updateHomescreen()
 
