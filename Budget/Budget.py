@@ -23,7 +23,7 @@ today = date.today()
 # mm/dd/yy
 d = today.strftime("%m/%d/%y")
 date_string = d[0:2] + d[3:5] + "20" +d[6:8]
-
+visited = True
 
 class MyGUI(QMainWindow):
     def __init__(self):
@@ -53,6 +53,9 @@ class MyGUI(QMainWindow):
         #Back button on enter transactions
         self.pushButton_10.clicked.connect(self.on_pushButton_10)
 
+        #Back button on see transactions
+        self.pushButton_12.clicked.connect(self.on_pushButton_12)
+
         #Done button on enter transactions-Housing
         self.pushButton_4.clicked.connect(self.on_pushButton_4)
 
@@ -76,7 +79,6 @@ class MyGUI(QMainWindow):
         cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Housing' AND purchase_date LIKE (%s);", 
         val)
         result = cursor.fetchone()
-        # house_sum = 2000
         house_sum = result.get("SUM(purchase_amount)") 
 
         #Adds up purchases in grocery section from current month
@@ -153,7 +155,6 @@ class MyGUI(QMainWindow):
         cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Housing' AND purchase_date LIKE (%s);", 
         val)
         result = cursor.fetchone()
-        # house_sum = 2000
         house_sum = result.get("SUM(purchase_amount)") 
 
         #Adds up purchases in grocery section from current month
@@ -203,8 +204,112 @@ class MyGUI(QMainWindow):
         self.stackedWidget.setCurrentIndex(2)
 
     #Sends us to see transactions screen
-    def on_pushButton_3(self):
+    def on_pushButton_3(self, chart):
         self.stackedWidget.setCurrentIndex(3)
+        set0 = QBarSet('Housing')  # need to pull from db
+        set1 = QBarSet('Groceries')
+        set2 = QBarSet('Outings')
+        set3 = QBarSet('Personal')
+
+        #Adds up purchases in housing section from current month
+        val = date_string[0:2] + "__" + date_string[4:8]
+
+        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Housing' AND purchase_date LIKE (%s);", 
+        val)
+        result = cursor.fetchone()
+        house_sum = result.get("SUM(purchase_amount)")
+
+        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Housing' AND purchase_date LIKE (%s);", 
+        "10__2022")
+        result = cursor.fetchone()
+        house_sum_2 = result.get("SUM(purchase_amount)") 
+
+        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Housing' AND purchase_date LIKE (%s);", 
+        "09__2022")
+        result = cursor.fetchone()
+        house_sum_3 = result.get("SUM(purchase_amount)") 
+
+        #Adds up purchases in grocery section from current month
+        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Groceries' AND purchase_date LIKE (%s);", 
+        val)
+        result = cursor.fetchone()
+        groceries_sum = result.get("SUM(purchase_amount)")
+
+        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Groceries' AND purchase_date LIKE (%s);", 
+        "10__2022")
+        result = cursor.fetchone()
+        groceries_sum_2 = result.get("SUM(purchase_amount)")
+
+        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Groceries' AND purchase_date LIKE (%s);", 
+        "09__2022")
+        result = cursor.fetchone()
+        groceries_sum_3 = result.get("SUM(purchase_amount)")
+
+        #Adds up purchases in outtings section from current month
+        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Outtings' AND purchase_date LIKE (%s);", 
+        val)
+        result = cursor.fetchone()
+        outtings_sum = result.get("SUM(purchase_amount)")
+
+        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Outtings' AND purchase_date LIKE (%s);", 
+        "10__2022")
+        result = cursor.fetchone()
+        outtings_sum_2 = result.get("SUM(purchase_amount)")
+
+        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Outtings' AND purchase_date LIKE (%s);", 
+        "09__2022")
+        result = cursor.fetchone()
+        outtings_sum_3 = result.get("SUM(purchase_amount)")
+
+        #Adds up purchases in the personal section from current month
+        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Personal' AND purchase_date LIKE (%s);", 
+        val)
+        result = cursor.fetchone()
+        personal_sum = result.get("SUM(purchase_amount)")
+
+        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Personal' AND purchase_date LIKE (%s);", 
+        "10__2022")
+        result = cursor.fetchone()
+        personal_sum_2 = result.get("SUM(purchase_amount)")
+
+        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Personal' AND purchase_date LIKE (%s);", 
+        "09__2022")
+        result = cursor.fetchone()
+        personal_sum_3 = result.get("SUM(purchase_amount)")
+
+        set0.append([house_sum, house_sum_2, house_sum_3])  # need to pull from db
+        set1.append([groceries_sum, groceries_sum_2, groceries_sum_3])
+        set2.append([outtings_sum, outtings_sum_2, outtings_sum_3])
+        set3.append([personal_sum, personal_sum_2, personal_sum_3])
+
+        series = QBarSeries()
+        series.append(set0)
+        series.append(set1)
+        series.append(set2)
+        series.append(set3)
+
+        chart = QChart()
+        chart.addSeries(series)
+        chart.setTitle('Past Spending')
+        chart.setAnimationOptions(QChart.SeriesAnimations)
+
+        months = ('Sept', 'Oct', 'Nov')
+        axisX = QBarCategoryAxis()
+        axisX.append(months)
+
+        axisY = QValueAxis()
+        axisY.setRange(0, 1800)
+
+        chart.addAxis(axisX, Qt.AlignBottom)
+        chart.addAxis(axisY, Qt.AlignLeft)
+
+        chart.legend().setVisible(True)
+        chart.legend().setAlignment(Qt.AlignBottom)
+
+        chartView = QChartView(chart)
+        if visited:
+            self.horizontalLayout_3.addWidget(chartView)
+        visited[0] = False
 
     #Back button - edit transactions screen
     def on_pushButton_8(self):
@@ -212,6 +317,10 @@ class MyGUI(QMainWindow):
     
     #Back button - enter transactions screen
     def on_pushButton_10(self):
+        self.stackedWidget.setCurrentIndex(0)
+
+    #Back button - see transactions screen
+    def on_pushButton_12(self):
         self.stackedWidget.setCurrentIndex(0)
     
     #Updates database to edit home budget
@@ -250,7 +359,6 @@ class MyGUI(QMainWindow):
         name = self.lineEdit_6.text()
         amount = self.lineEdit_7.text()
         p_type = comboBox_map[self.comboBox.currentIndex()]
-        print(p_type)
         val = (purchase_id, 1, p_type, date, name, amount)
         cursor.execute("INSERT INTO customer_purchases (purchase_id, customer_id, purchase_type, purchase_date, purchase_name, purchase_amount) VALUES ((%s), (%s), (%s), (%s), (%s), (%s));", 
         val)

@@ -27,7 +27,7 @@ class MyGUI(QMainWindow):
         set1 = QBarSet('Spotify')
         set2 = QBarSet('Apple Music')
 
-        set0.append([2, 6, 21])  # need to pull from db
+        set0.append([2, 2, 2])  # need to pull from db
         set1.append([20, 15, 18])
         set2.append([15, 18, 7])
 
