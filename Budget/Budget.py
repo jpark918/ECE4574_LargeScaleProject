@@ -1,12 +1,10 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtChart import *
-from datetime import date
 from PyQt5 import uic
-from PyQt5.Qt import Qt
+from PyQt5.QtCore import Qt
 import random
 import pymysql
 
-months = {"":"",}
 #Connect to db
 db = pymysql.connect(host='budgetwatcher.cfwqbytexmh5.us-east-1.rds.amazonaws.com',
                              user='admin',
@@ -15,7 +13,6 @@ db = pymysql.connect(host='budgetwatcher.cfwqbytexmh5.us-east-1.rds.amazonaws.co
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
 cursor = db.cursor()#Db cursor
-today = date.today()
 
 class MyGUI(QMainWindow):
     def __init__(self):
@@ -57,10 +54,6 @@ class MyGUI(QMainWindow):
         chartView = QChartView(chart)
         self.gridLayout_4.addWidget(chartView)
 
-        # mm/dd/y
-        d = today.strftime("%m/%d/%y")
-        date_string = d[0:2] + d[3:5] + d[6:8]
-
         #Edit budget button pressed
         self.pushButton.clicked.connect(self.on_pushButton)
 
@@ -69,6 +62,8 @@ class MyGUI(QMainWindow):
 
         #See transactions button
         self.pushButton_3.clicked.connect(self.on_pushButton_3)
+
+        self.pushButton_11.clicked.connect(self.on_pushButton_11)
 
         #Back button on edit transactions
         self.pushButton_8.clicked.connect(self.on_pushButton_8)
@@ -89,7 +84,7 @@ class MyGUI(QMainWindow):
         self.pushButton_9.released.connect(self.on_pushButton_9)
 
         #Sets size of window
-        self.setGeometry(100, 100, 900, 400)
+        self.setGeometry(100, 100, 800, 300)
         self.show()
     
     #Sets up homescreen of labels from the budget
@@ -154,11 +149,14 @@ class MyGUI(QMainWindow):
     def on_pushButton_10(self):
         self.stackedWidget.setCurrentIndex(0)
     
+    #tracker button - enter transactions screen
+    def on_pushButton_11(self):
+        self.stackedWidget.setCurrentIndex(4)
+    
     #Updates database to edit home budget
     def on_pushButton_4(self):
         new_budget = self.lineEdit.text()
         cursor.execute("UPDATE user_budget SET House_Budget = (%s) WHERE Customer_ID = 1;", new_budget)
-        
         db.commit()
         self.updateHomescreen()
     #Updates database to edit groceries budget
