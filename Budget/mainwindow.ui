@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>901</width>
-    <height>347</height>
+    <width>1094</width>
+    <height>561</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <rect>
       <x>0</x>
       <y>20</y>
-      <width>901</width>
+      <width>1091</width>
       <height>581</height>
      </rect>
     </property>
@@ -31,7 +31,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>10</y>
+        <y>80</y>
         <width>541</width>
         <height>131</height>
        </rect>
@@ -99,7 +99,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>140</y>
+        <y>210</y>
         <width>391</width>
         <height>80</height>
        </rect>
@@ -119,6 +119,36 @@
          </property>
         </widget>
        </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="gridLayoutWidget_4">
+      <property name="geometry">
+       <rect>
+        <x>460</x>
+        <y>0</y>
+        <width>631</width>
+        <height>481</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_4"/>
+     </widget>
+     <widget class="QWidget" name="horizontalLayoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>290</y>
+        <width>391</width>
+        <height>80</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QPushButton" name="pushButton_11">
+         <property name="text">
+          <string>See subscriptions</string>
+         </property>
+        </widget>
+       </item>
        <item>
         <widget class="QPushButton" name="pushButton_3">
          <property name="text">
@@ -128,69 +158,38 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="gridLayoutWidget_4">
+     <widget class="QLabel" name="label_18">
       <property name="geometry">
        <rect>
-        <x>460</x>
-        <y>0</y>
-        <width>361</width>
-        <height>251</height>
+        <x>80</x>
+        <y>30</y>
+        <width>211</width>
+        <height>21</height>
        </rect>
       </property>
-      <layout class="QGridLayout" name="gridLayout_4"/>
-     </widget>
-     <widget class="QWidget" name="horizontalLayoutWidget_2">
-      <property name="geometry">
-       <rect>
-        <x>19</x>
-        <y>220</y>
-        <width>391</width>
-        <height>80</height>
-       </rect>
+      <property name="text">
+       <string>TextLabel</string>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QPushButton" name="pushButton_11">
-         <property name="text">
-          <string>See subsscriptions</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
      </widget>
     </widget>
     <widget class="QWidget" name="page_2">
      <widget class="QWidget" name="gridLayoutWidget_2">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>30</y>
-        <width>471</width>
-        <height>151</height>
+        <x>270</x>
+        <y>100</y>
+        <width>581</width>
+        <height>271</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="4" column="2">
-        <widget class="QPushButton" name="pushButton_7">
-         <property name="text">
-          <string>Done</string>
-         </property>
-        </widget>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="lineEdit_3"/>
        </item>
-       <item row="0" column="0" colspan="2">
-        <widget class="QLabel" name="label_9">
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_10">
          <property name="text">
-          <string>Enter your proposed budget for:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QLineEdit" name="lineEdit_4"/>
-       </item>
-       <item row="1" column="2">
-        <widget class="QPushButton" name="pushButton_4">
-         <property name="text">
-          <string>Done</string>
+          <string>Housing:</string>
          </property>
         </widget>
        </item>
@@ -201,24 +200,13 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_12">
-         <property name="text">
-          <string>Outings:</string>
-         </property>
-        </widget>
+       <item row="4" column="1">
+        <widget class="QLineEdit" name="lineEdit_4"/>
        </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_10">
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_11">
          <property name="text">
-          <string>Housing:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_13">
-         <property name="text">
-          <string>Personal Expenses:</string>
+          <string>Groceries:</string>
          </property>
         </widget>
        </item>
@@ -229,19 +217,37 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="lineEdit_3"/>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_13">
+         <property name="text">
+          <string>Personal Expenses:</string>
+         </property>
+        </widget>
        </item>
        <item row="2" column="1">
         <widget class="QLineEdit" name="lineEdit_2"/>
        </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>Outings:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QPushButton" name="pushButton_4">
+         <property name="text">
+          <string>Done</string>
+         </property>
+        </widget>
+       </item>
        <item row="1" column="1">
         <widget class="QLineEdit" name="lineEdit"/>
        </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_11">
+       <item row="4" column="2">
+        <widget class="QPushButton" name="pushButton_7">
          <property name="text">
-          <string>Groceries:</string>
+          <string>Done</string>
          </property>
         </widget>
        </item>
@@ -252,6 +258,13 @@
          </property>
         </widget>
        </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>Enter your proposed budget for:</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </widget>
@@ -259,17 +272,44 @@
      <widget class="QWidget" name="gridLayoutWidget_3">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>10</y>
-        <width>391</width>
-        <height>151</height>
+        <x>270</x>
+        <y>100</y>
+        <width>571</width>
+        <height>261</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
+       <item row="4" column="0">
+        <widget class="QPushButton" name="pushButton_9">
+         <property name="text">
+          <string>Done</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLineEdit" name="lineEdit_6"/>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="label_17">
+         <property name="text">
+          <string>Category:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="lineEdit_7"/>
+       </item>
        <item row="0" column="1">
         <widget class="QLabel" name="label_16">
          <property name="text">
           <string>Purchase Amount:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QPushButton" name="pushButton_10">
+         <property name="text">
+          <string>Back</string>
          </property>
         </widget>
        </item>
@@ -297,6 +337,9 @@
          </item>
         </widget>
        </item>
+       <item row="1" column="0">
+        <widget class="QLineEdit" name="lineEdit_5"/>
+       </item>
        <item row="2" column="0">
         <widget class="QLabel" name="label_15">
          <property name="text">
@@ -304,40 +347,10 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="lineEdit_7"/>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLabel" name="label_17">
-         <property name="text">
-          <string>Category:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLineEdit" name="lineEdit_6"/>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLineEdit" name="lineEdit_5"/>
-       </item>
        <item row="0" column="0">
         <widget class="QLabel" name="label_14">
          <property name="text">
           <string>Date of Transaction: (MMDDYYYY)</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0">
-        <widget class="QPushButton" name="pushButton_10">
-         <property name="text">
-          <string>Back</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QPushButton" name="pushButton_9">
-         <property name="text">
-          <string>Done</string>
          </property>
         </widget>
        </item>
@@ -352,7 +365,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>901</width>
+     <width>1094</width>
      <height>17</height>
     </rect>
    </property>

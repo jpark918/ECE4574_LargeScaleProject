@@ -27,9 +27,9 @@ class MyGUI(QMainWindow):
         set1 = QBarSet('Spotify')
         set2 = QBarSet('Apple Music')
 
-        set0.append([2, 6, 21, 10])  # need to pull from db
-        set1.append([20, 15, 18, 9])
-        set2.append([15, 18, 7, 21])
+        set0.append([2, 6, 21])  # need to pull from db
+        set1.append([20, 15, 18])
+        set2.append([15, 18, 7])
 
         series = QBarSeries()
         series.append(set0)
@@ -41,7 +41,7 @@ class MyGUI(QMainWindow):
         chart.setTitle('Web Subscriptions')
         chart.setAnimationOptions(QChart.SeriesAnimations)
 
-        months = ('Sept', 'Oct', 'Nov', 'Dec')
+        months = ('Sept', 'Oct', 'Nov')
         # months = ('gruyere', 'colby', 'pepper jack', 'american')
         axisX = QBarCategoryAxis()
         axisX.append(months)
@@ -152,31 +152,46 @@ class MyGUI(QMainWindow):
         set1 = QBarSet('Groceries')
         set2 = QBarSet('Outings')
         set3 = QBarSet('Personal Expenses')
+        set4 = QBarSet('Available funds')
 
-        set0.append([1702, 1300, 120, 1800])  # need to pull from db
-        set1.append([782, 570.23, 18, 1000])
-        set2.append([678.09, 236.10, 7, 550])
-        set3.append([740.17, 312.78, 23, 750])
+        #set0.append([(1702/1800)*100, (1300/1800)*100, (120/1800)*100, (1800/1800)*100])  # need to pull from db
+        #set1.append([(782/1000)*100, (570.23/1000)*100, (18/1000)*100, (1000/1000)*100])
+        #set2.append([(378.09/550)*100, (236.10/550)*100, (7/550)*100, (550/550)*100])
+        #set3.append([(740.17/750)*100, (312.78/750)*100, (23/750)*100, (750/750)*100])
+        # set0.append([1702, 1300, 120, 1800])  # need to pull from db
+        # set1.append([782, 570.23, 18, 1000])
+        # set2.append([378.09, 236.10, 7, 550])
+        # set3.append([740.17, 312.78, 23, 750])
+        # set4.append([(4100-set0[0]-set1[0]-set2[0]-set3[0]), (4100-set0[1]-set1[1]-set2[1]-set3[1]),
+        #              (4100-set0[2]-set1[2]-set2[2]-set3[2]), (4100-set0[3]-set1[3]-set2[3]-set3[3])])
+        
+        set0.append([1702])  # need to pull from db
+        set1.append([782])
+        set2.append([378.09])
+        set3.append([740.17])
+        set4.append([(4100-set0[0]-set1[0]-set2[0]-set3[0])])
 
-        # series = QBarSeries()
+
+        #series = QBarSeries()
         series = QPercentBarSeries()  # !!!!!!!!!
         series.append(set0)
         series.append(set1)
         series.append(set2)
         series.append(set3)
+        series.append(set4)
 
         chart = QChart()
         chart.addSeries(series)
         chart.setTitle('Budget Usage')
         chart.setAnimationOptions(QChart.SeriesAnimations)
 
-        months = ('Sept', 'Oct', 'Nov', 'Dec')
+        months = ('Sept')
         # months = ('gruyere', 'colby', 'pepper jack', 'american')
         axisX = QBarCategoryAxis()
         axisX.append(months)
 
         axisY = QValueAxis()
-        axisY.setRange(0, 100)
+        axisY.setRange(0, 4100)
 
         chart.addAxis(axisX, Qt.AlignBottom)
         chart.addAxis(axisY, Qt.AlignLeft)
@@ -186,6 +201,11 @@ class MyGUI(QMainWindow):
         chart.legend().setVisible(True)
         chart.legend().setAlignment(Qt.AlignBottom)
         chartView = QChartView(chart)
+        # self.page_4.layout = QHBoxLayout()
+        # self.page_4.layout.addWidget(chartView)
+        # layout = QHBoxLayout()
+        # layout.addWidget(chartView)
+        # self.setLayout(layout)
         self.setCentralWidget(chartView)
 
 

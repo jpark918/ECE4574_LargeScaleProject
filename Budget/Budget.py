@@ -1,10 +1,16 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtChart import *
+from datetime import date
 from PyQt5 import uic
-from PyQt5.QtCore import Qt
+from PyQt5.Qt import Qt
 import random
 import pymysql
 
+months_map = {"01":"January",
+            "09": "September",
+            "10" : "October",
+            "11" : "November",
+            "12" : "December"}
 #Connect to db
 db = pymysql.connect(host='budgetwatcher.cfwqbytexmh5.us-east-1.rds.amazonaws.com',
                              user='admin',
@@ -13,46 +19,24 @@ db = pymysql.connect(host='budgetwatcher.cfwqbytexmh5.us-east-1.rds.amazonaws.co
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
 cursor = db.cursor()#Db cursor
+today = date.today()
+# mm/dd/yy
+d = today.strftime("%m/%d/%y")
+date_string = d[0:2] + d[3:5] + "20" +d[6:8]
+
 
 class MyGUI(QMainWindow):
     def __init__(self):
         super(MyGUI, self).__init__()
         uic.loadUi("mainwindow.ui", self) #Retrieves ui from qt creator
-        self.updateHomescreen()
-
-        set0 = QBarSet('Netflix')
-        set1 = QBarSet('Spotify')
-        set2 = QBarSet('Apple Music')
-
-        set0.append([2, 6, 21, 10])
-        set1.append([20, 15, 18, 9])
-        set2.append([15, 18, 7, 21])
-
-        series = QBarSeries()
-        series.append(set0)
-        series.append(set1)
-        series.append(set2)
-
+        self.updateHomescreen()#Updates labels on home screen        
         chart = QChart()
-        chart.addSeries(series)
-        chart.setTitle('Web Subscriptions')
-        chart.setAnimationOptions(QChart.SeriesAnimations)
-
-        months = ('Sept', 'Oct', 'Nov', 'Dec')
-        axisX = QBarCategoryAxis()
-        axisX.append(months)
-
-        axisY = QValueAxis()
-        axisY.setRange(0, 50)
-
-        chart.addAxis(axisX, Qt.AlignBottom)
-        chart.addAxis(axisY, Qt.AlignLeft)
-
-        chart.legend().setVisible(True)
-        chart.legend().setAlignment(Qt.AlignBottom)
-
+        self.changeSeries(chart)
         chartView = QChartView(chart)
         self.gridLayout_4.addWidget(chartView)
+
+        welcome = "Your expenses for " + months_map[date_string[0:2]] + ":"
+        self.label_18.setText(welcome)
 
         #Edit budget button pressed
         self.pushButton.clicked.connect(self.on_pushButton)
@@ -62,8 +46,6 @@ class MyGUI(QMainWindow):
 
         #See transactions button
         self.pushButton_3.clicked.connect(self.on_pushButton_3)
-
-        self.pushButton_11.clicked.connect(self.on_pushButton_11)
 
         #Back button on edit transactions
         self.pushButton_8.clicked.connect(self.on_pushButton_8)
@@ -83,29 +65,112 @@ class MyGUI(QMainWindow):
         #Done button on add transaction
         self.pushButton_9.released.connect(self.on_pushButton_9)
 
+        self.gridLayout_2.setRowStretch(0, 200)
         #Sets size of window
-        self.setGeometry(100, 100, 800, 300)
+        self.setGeometry(100, 100, 1100, 600)
         self.show()
-    
-    #Sets up homescreen of labels from the budget
-    def updateHomescreen(self):
-        #Adds up purchases in housing section
-        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Housing';")
+
+    def changeSeries(self, chart):
+        #Adds up purchases in housing section from current month
+        val = date_string[0:2] + "__" + date_string[4:8]
+        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Housing' AND purchase_date LIKE (%s);", 
+        val)
         result = cursor.fetchone()
+        # house_sum = 2000
         house_sum = result.get("SUM(purchase_amount)") 
 
-        #Adds up purchases in grocery section
-        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Groceries';")
+        #Adds up purchases in grocery section from current month
+        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Groceries' AND purchase_date LIKE (%s);", 
+        val)
         result = cursor.fetchone()
         groceries_sum = result.get("SUM(purchase_amount)")
 
-        #Adds up purchases in outtings section
-        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Outtings';")
+        #Adds up purchases in outtings section from current month
+        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Outtings' AND purchase_date LIKE (%s);", 
+        val)
         result = cursor.fetchone()
         outtings_sum = result.get("SUM(purchase_amount)")
 
-        #Adds up purchases in the personal section
-        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Personal';")
+        #Adds up purchases in the personal section from current month
+        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Personal' AND purchase_date LIKE (%s);", 
+        val)
+        result = cursor.fetchone()
+        personal_sum = result.get("SUM(purchase_amount)")
+
+        #Gets proposed budget from db
+        cursor.execute("SELECT * from user_budget")
+        result = cursor.fetchone()        
+
+        #Gets individual budget per category
+        house_budget = result.get("House_Budget")
+        groceries_budget = result.get("Groceries_Budget")
+        outtings_budget = result.get("Outtings_Budget")
+        personal_budget = result.get("Personal_Budget")
+
+        budget_sum = house_budget + groceries_budget + outtings_budget + personal_budget
+        # expense graph
+        set0 = QBarSet('Housing')  # need to pull from db
+        set1 = QBarSet('Groceries')
+        set2 = QBarSet('Outings')
+        set3 = QBarSet('Personal')
+        set4 = QBarSet('Available funds')
+
+        set0.append([house_sum])  # need to pull from db
+        set1.append([groceries_sum])
+        set2.append([outtings_sum])
+        set3.append([personal_sum])
+        set4.append([(budget_sum-set0[0]-set1[0]-set2[0]-set3[0])])
+
+        series = QPercentBarSeries()  # !!!!!!!!!
+        series.append(set0)
+        series.append(set1)
+        series.append(set2)
+        series.append(set3)
+        series.append(set4)
+
+        chart.addSeries(series)
+        chart.setTitle('Budget Usage')
+        chart.setAnimationOptions(QChart.SeriesAnimations)
+
+        cur_month = months_map[date_string[0:2]]
+        months = (cur_month)
+        axisX = QBarCategoryAxis()
+        axisX.append(months)
+        axisY = QValueAxis()
+        axisY.setRange(0, budget_sum)
+
+        chart.addAxis(axisX, Qt.AlignBottom)
+        chart.addAxis(axisY, Qt.AlignLeft)
+
+        chart.legend().setVisible(True)
+        chart.legend().setAlignment(Qt.AlignBottom)
+
+    
+    #Sets up homescreen of labels from the budget
+    def updateHomescreen(self):
+        #Adds up purchases in housing section from current month
+        val = date_string[0:2] + "__" + date_string[4:8]
+        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Housing' AND purchase_date LIKE (%s);", 
+        val)
+        result = cursor.fetchone()
+        # house_sum = 2000
+        house_sum = result.get("SUM(purchase_amount)") 
+
+        #Adds up purchases in grocery section from current month
+        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Groceries' AND purchase_date LIKE (%s);", 
+        val)
+        result = cursor.fetchone()
+        groceries_sum = result.get("SUM(purchase_amount)")
+
+        #Adds up purchases in outtings section from current month
+        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Outtings' AND purchase_date LIKE (%s);", 
+        val)
+        result = cursor.fetchone()
+        outtings_sum = result.get("SUM(purchase_amount)")
+
+        #Adds up purchases in the personal section from current month
+        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Personal' AND purchase_date LIKE (%s);", 
+        val)
         result = cursor.fetchone()
         personal_sum = result.get("SUM(purchase_amount)")
 
@@ -148,10 +213,6 @@ class MyGUI(QMainWindow):
     #Back button - enter transactions screen
     def on_pushButton_10(self):
         self.stackedWidget.setCurrentIndex(0)
-    
-    #tracker button - enter transactions screen
-    def on_pushButton_11(self):
-        self.stackedWidget.setCurrentIndex(4)
     
     #Updates database to edit home budget
     def on_pushButton_4(self):
