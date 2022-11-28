@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>584</width>
-    <height>251</height>
+    <width>901</width>
+    <height>347</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,9 +17,9 @@
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
-      <x>-1</x>
-      <y>-1</y>
-      <width>801</width>
+      <x>0</x>
+      <y>20</y>
+      <width>901</width>
       <height>581</height>
      </rect>
     </property>
@@ -37,17 +37,10 @@
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_2">
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_7">
          <property name="text">
-          <string>Groceries:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLabel" name="label_8">
-         <property name="text">
-          <string>You have spent $120.00/$200.00 of your budget on personal expenses</string>
+          <string>Personal Expenses:</string>
          </property>
         </widget>
        </item>
@@ -58,31 +51,10 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_7">
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>Personal Expenses:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>You have spent $570.00/$700.00 of your budget for groceries</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string>You have spent $150.00/$300.00 of your budget for outside activity</string>
+          <string>Groceries:</string>
          </property>
         </widget>
        </item>
@@ -93,12 +65,40 @@
          </property>
         </widget>
        </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>You have spent $570.00/$700.00 of your budget for groceries</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>You have spent $150.00/$300.00 of your budget for outside activity</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>You have spent $120.00/$200.00 of your budget on personal expenses</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="horizontalLayoutWidget">
       <property name="geometry">
        <rect>
-        <x>70</x>
+        <x>20</x>
         <y>140</y>
         <width>391</width>
         <height>80</height>
@@ -123,6 +123,36 @@
         <widget class="QPushButton" name="pushButton_3">
          <property name="text">
           <string>See Transactions</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="gridLayoutWidget_4">
+      <property name="geometry">
+       <rect>
+        <x>460</x>
+        <y>0</y>
+        <width>361</width>
+        <height>251</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_4"/>
+     </widget>
+     <widget class="QWidget" name="horizontalLayoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>19</x>
+        <y>220</y>
+        <width>391</width>
+        <height>80</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QPushButton" name="pushButton_11">
+         <property name="text">
+          <string>See subsscriptions</string>
          </property>
         </widget>
        </item>
@@ -293,7 +323,7 @@
        <item row="0" column="0">
         <widget class="QLabel" name="label_14">
          <property name="text">
-          <string>Date of Transaction:</string>
+          <string>Date of Transaction: (MMDDYYYY)</string>
          </property>
         </widget>
        </item>
@@ -322,7 +352,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>584</width>
+     <width>901</width>
      <height>17</height>
     </rect>
    </property>

@@ -1,33 +1,33 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtChart import *
-from datetime import date
 from PyQt5 import uic
 from PyQt5.Qt import Qt
 import random
 import pymysql
 
-months = {"":"",}
-#Connect to db
+# Connect to db
 db = pymysql.connect(host='budgetwatcher.cfwqbytexmh5.us-east-1.rds.amazonaws.com',
-                             user='admin',
-                             password='vtece4574',
-                             database='budgetWatcherDb',
-                             charset='utf8mb4',
-                             cursorclass=pymysql.cursors.DictCursor)
-cursor = db.cursor()#Db cursor
-today = date.today()
+                     user='admin',
+                     password='vtece4574',
+                     database='budgetWatcherDb',
+                     charset='utf8mb4',
+                     cursorclass=pymysql.cursors.DictCursor)
+cursor = db.cursor()  # Db cursor
+
 
 class MyGUI(QMainWindow):
     def __init__(self):
         super(MyGUI, self).__init__()
-        uic.loadUi("mainwindow.ui", self) #Retrieves ui from qt creator
+        uic.loadUi("mainwindow.ui", self)  # Retrieves ui from qt creator
         self.updateHomescreen()
 
-        set0 = QBarSet('Netflix')
+        self.setWindowTitle("Group G: Budget Tracker.exe")
+
+        set0 = QBarSet('Netflix')  # need to pull from db
         set1 = QBarSet('Spotify')
         set2 = QBarSet('Apple Music')
 
-        set0.append([2, 6, 21, 10])
+        set0.append([2, 6, 21, 10])  # need to pull from db
         set1.append([20, 15, 18, 9])
         set2.append([15, 18, 7, 21])
 
@@ -42,6 +42,7 @@ class MyGUI(QMainWindow):
         chart.setAnimationOptions(QChart.SeriesAnimations)
 
         months = ('Sept', 'Oct', 'Nov', 'Dec')
+        # months = ('gruyere', 'colby', 'pepper jack', 'american')
         axisX = QBarCategoryAxis()
         axisX.append(months)
 
@@ -55,76 +56,77 @@ class MyGUI(QMainWindow):
         chart.legend().setAlignment(Qt.AlignBottom)
 
         chartView = QChartView(chart)
+        #self.setCentralWidget(chartView)
+
+        # message = QMessageBox()
+        # message.setText("Hello World")
+        # message.exec_()
         self.gridLayout_4.addWidget(chartView)
 
-        # mm/dd/y
-        d = today.strftime("%m/%d/%y")
-        date_string = d[0:2] + d[3:5] + d[6:8]
-
-        #Edit budget button pressed
+        # Edit budget button pressed
         self.pushButton.clicked.connect(self.on_pushButton)
 
-        #Enter transactions button
+        # Enter transactions button
         self.pushButton_2.clicked.connect(self.on_pushButton_2)
 
-        #See transactions button
+        # See transactions button
         self.pushButton_3.clicked.connect(self.on_pushButton_3)
 
-        #Back button on edit transactions
+        # Back button on edit transactions
         self.pushButton_8.clicked.connect(self.on_pushButton_8)
 
-        #Back button on enter transactions
+        # Back button on enter transactions
         self.pushButton_10.clicked.connect(self.on_pushButton_10)
 
-        #Done button on enter transactions-Housing
+        # Done button on enter transactions-Housing
         self.pushButton_4.clicked.connect(self.on_pushButton_4)
 
-        #Done button on enter transactions-Groceries
+        # Done button on enter transactions-Groceries
         self.pushButton_5.clicked.connect(self.on_pushButton_5)
 
-        #Done button on enter transactions-Outtings
+        # Done button on enter transactions-Outtings
         self.pushButton_6.clicked.connect(self.on_pushButton_6)
 
-        #Done button on add transaction
+        # Done button on add transaction
         self.pushButton_9.released.connect(self.on_pushButton_9)
 
-        #Sets size of window
-        self.setGeometry(100, 100, 900, 400)
+        # Sets size of window
+        self.setGeometry(100, 100, 800, 300)
         self.show()
-    
-    #Sets up homescreen of labels from the budget
+
+    # Sets up homescreen of labels from the budget
     def updateHomescreen(self):
-        #Adds up purchases in housing section
+        # Adds up purchases in housing section
         cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Housing';")
         result = cursor.fetchone()
-        house_sum = result.get("SUM(purchase_amount)") 
+        house_sum = result.get("SUM(purchase_amount)")
 
-        #Adds up purchases in grocery section
+        # Adds up purchases in grocery section
         cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Groceries';")
         result = cursor.fetchone()
         groceries_sum = result.get("SUM(purchase_amount)")
 
-        #Adds up purchases in outtings section
+        # Adds up purchases in outtings section
         cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Outtings';")
         result = cursor.fetchone()
         outtings_sum = result.get("SUM(purchase_amount)")
 
-        #Adds up purchases in the personal section
+        # Adds up purchases in the personal section
         cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Personal';")
         result = cursor.fetchone()
         personal_sum = result.get("SUM(purchase_amount)")
 
-        #Gets proposed budget from db
+        # Gets proposed budget from db
         cursor.execute("SELECT * from user_budget")
-        result = cursor.fetchone()        
+        result = cursor.fetchone()
 
-        #Gets individual budget per category
+        # Gets individual budget per category
         house_budget = result.get("House_Budget")
         groceries_budget = result.get("Groceries_Budget")
         outtings_budget = result.get("Outtings_Budget")
         personal_budget = result.get("Personal_Budget")
 
-        #Creates labels to be displayed on home screen
+        # Creates labels to be displayed on home screen
         house = '$' + str(house_sum) + ' / $' + str(house_budget)
         groceries = '$' + str(groceries_sum) + ' / $' + str(groceries_budget)
         outtings = '$' + str(outtings_sum) + ' / $' + str(outtings_budget)
@@ -134,55 +136,98 @@ class MyGUI(QMainWindow):
         self.label_6.setText(outtings)
         self.label_8.setText(personal)
 
-    #Sends us to edit budget screen
+    # Sends us to edit budget screen
     def on_pushButton(self):
         self.stackedWidget.setCurrentIndex(1)
 
-    #Sends us to enter transactions screen
+    # Sends us to enter transactions screen
     def on_pushButton_2(self):
         self.stackedWidget.setCurrentIndex(2)
 
-    #Sends us to see transactions screen
+    # Sends us to see transactions screen
     def on_pushButton_3(self):
         self.stackedWidget.setCurrentIndex(3)
+        # expense graph
+        set0 = QBarSet('Housing')  # need to pull from db
+        set1 = QBarSet('Groceries')
+        set2 = QBarSet('Outings')
+        set3 = QBarSet('Personal Expenses')
 
-    #Back button - edit transactions screen
+        set0.append([1702, 1300, 120, 1800])  # need to pull from db
+        set1.append([782, 570.23, 18, 1000])
+        set2.append([678.09, 236.10, 7, 550])
+        set3.append([740.17, 312.78, 23, 750])
+
+        # series = QBarSeries()
+        series = QPercentBarSeries()  # !!!!!!!!!
+        series.append(set0)
+        series.append(set1)
+        series.append(set2)
+        series.append(set3)
+
+        chart = QChart()
+        chart.addSeries(series)
+        chart.setTitle('Budget Usage')
+        chart.setAnimationOptions(QChart.SeriesAnimations)
+
+        months = ('Sept', 'Oct', 'Nov', 'Dec')
+        # months = ('gruyere', 'colby', 'pepper jack', 'american')
+        axisX = QBarCategoryAxis()
+        axisX.append(months)
+
+        axisY = QValueAxis()
+        axisY.setRange(0, 100)
+
+        chart.addAxis(axisX, Qt.AlignBottom)
+        chart.addAxis(axisY, Qt.AlignLeft)
+        # chart.createDefaultAxes()
+        # chart.addAxis(axisX, Qt.AlignBottom)
+
+        chart.legend().setVisible(True)
+        chart.legend().setAlignment(Qt.AlignBottom)
+        chartView = QChartView(chart)
+        self.setCentralWidget(chartView)
+
+
+    # Back button - edit transactions screen
     def on_pushButton_8(self):
         self.stackedWidget.setCurrentIndex(0)
-    
-    #Back button - enter transactions screen
+
+    # Back button - enter transactions screen
     def on_pushButton_10(self):
         self.stackedWidget.setCurrentIndex(0)
-    
-    #Updates database to edit home budget
+
+    # Updates database to edit home budget
     def on_pushButton_4(self):
         new_budget = self.lineEdit.text()
         cursor.execute("UPDATE user_budget SET House_Budget = (%s) WHERE Customer_ID = 1;", new_budget)
-        
         db.commit()
         self.updateHomescreen()
-    #Updates database to edit groceries budget
+
+    # Updates database to edit groceries budget
     def on_pushButton_5(self):
         new_budget = self.lineEdit_2.text()
         cursor.execute("UPDATE user_budget SET Groceries_Budget = (%s) WHERE Customer_ID = 1;", new_budget)
         db.commit()
         self.updateHomescreen()
-    #Updates database to edit outtings budget
+
+    # Updates database to edit outtings budget
     def on_pushButton_6(self):
         new_budget = self.lineEdit_3.text()
         cursor.execute("UPDATE user_budget SET Outtings_Budget = (%s) WHERE Customer_ID = 1;", new_budget)
         db.commit()
         self.updateHomescreen()
-    #Updates database to edit personal budget
+
+    # Updates database to edit personal budget
     def on_pushButton_7(self):
         new_budget = self.lineEdit_4.text()
         cursor.execute("UPDATE user_budget SET Personal_Budget = (%s) WHERE Customer_ID = 1;", new_budget)
         db.commit()
         self.updateHomescreen()
 
-    #creates new purchase
+    # creates new purchase
     def on_pushButton_9(self):
-        comboBox_map= {0: "Housing",
+        comboBox_map = {0: "Housing",
                         1: "Outtings",
                         2: "Personal",
                         3: "Groceries"}
@@ -193,15 +238,18 @@ class MyGUI(QMainWindow):
         p_type = comboBox_map[self.comboBox.currentIndex()]
         print(p_type)
         val = (purchase_id, 1, p_type, date, name, amount)
-        cursor.execute("INSERT INTO customer_purchases (purchase_id, customer_id, purchase_type, purchase_date, purchase_name, purchase_amount) VALUES ((%s), (%s), (%s), (%s), (%s), (%s));", 
-        val)
+        cursor.execute(
+            "INSERT INTO customer_purchases (purchase_id, customer_id, purchase_type, purchase_date, purchase_name, purchase_amount) VALUES ((%s), (%s), (%s), (%s), (%s), (%s));",
+            val)
         db.commit()
         self.updateHomescreen()
 
-def main ():
+
+def main():
     app = QApplication([])
     window = MyGUI()
     app.exec_()
+
 
 if __name__ == '__main__':
     main()
