@@ -1,16 +1,10 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtChart import *
-from datetime import date
 from PyQt5 import uic
-from PyQt5.Qt import Qt
+from PyQt5.QtCore import Qt
 import random
 import pymysql
 
-months_map = {"01":"January",
-            "09": "September",
-            "10" : "October",
-            "11" : "November",
-            "12" : "December"}
 #Connect to db
 db = pymysql.connect(host='budgetwatcher.cfwqbytexmh5.us-east-1.rds.amazonaws.com',
                              user='admin',
@@ -19,24 +13,46 @@ db = pymysql.connect(host='budgetwatcher.cfwqbytexmh5.us-east-1.rds.amazonaws.co
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
 cursor = db.cursor()#Db cursor
-today = date.today()
-# mm/dd/yy
-d = today.strftime("%m/%d/%y")
-date_string = d[0:2] + d[3:5] + "20" +d[6:8]
-visited = True
 
 class MyGUI(QMainWindow):
     def __init__(self):
         super(MyGUI, self).__init__()
         uic.loadUi("mainwindow.ui", self) #Retrieves ui from qt creator
-        self.updateHomescreen()#Updates labels on home screen        
+        self.updateHomescreen()
+
+        set0 = QBarSet('Netflix')
+        set1 = QBarSet('Spotify')
+        set2 = QBarSet('Apple Music')
+
+        set0.append([2, 6, 21, 10])
+        set1.append([20, 15, 18, 9])
+        set2.append([15, 18, 7, 21])
+
+        series = QBarSeries()
+        series.append(set0)
+        series.append(set1)
+        series.append(set2)
+
         chart = QChart()
-        self.changeSeries(chart)
+        chart.addSeries(series)
+        chart.setTitle('Web Subscriptions')
+        chart.setAnimationOptions(QChart.SeriesAnimations)
+
+        months = ('Sept', 'Oct', 'Nov', 'Dec')
+        axisX = QBarCategoryAxis()
+        axisX.append(months)
+
+        axisY = QValueAxis()
+        axisY.setRange(0, 50)
+
+        chart.addAxis(axisX, Qt.AlignBottom)
+        chart.addAxis(axisY, Qt.AlignLeft)
+
+        chart.legend().setVisible(True)
+        chart.legend().setAlignment(Qt.AlignBottom)
+
         chartView = QChartView(chart)
         self.gridLayout_4.addWidget(chartView)
-
-        welcome = "Your expenses for " + months_map[date_string[0:2]] + ":"
-        self.label_18.setText(welcome)
 
         #Edit budget button pressed
         self.pushButton.clicked.connect(self.on_pushButton)
@@ -47,14 +63,13 @@ class MyGUI(QMainWindow):
         #See transactions button
         self.pushButton_3.clicked.connect(self.on_pushButton_3)
 
+        self.pushButton_11.clicked.connect(self.on_pushButton_11)
+
         #Back button on edit transactions
         self.pushButton_8.clicked.connect(self.on_pushButton_8)
 
         #Back button on enter transactions
         self.pushButton_10.clicked.connect(self.on_pushButton_10)
-
-        #Back button on see transactions
-        self.pushButton_12.clicked.connect(self.on_pushButton_12)
 
         #Done button on enter transactions-Housing
         self.pushButton_4.clicked.connect(self.on_pushButton_4)
@@ -68,110 +83,193 @@ class MyGUI(QMainWindow):
         #Done button on add transaction
         self.pushButton_9.released.connect(self.on_pushButton_9)
 
-        self.gridLayout_2.setRowStretch(0, 200)
         #Sets size of window
-        self.setGeometry(100, 100, 1100, 600)
+        self.setGeometry(100, 100, 800, 300)
         self.show()
 
-    def changeSeries(self, chart):
-        #Adds up purchases in housing section from current month
-        val = date_string[0:2] + "__" + date_string[4:8]
-        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Housing' AND purchase_date LIKE (%s);", 
-        val)
-        result = cursor.fetchone()
-        house_sum = result.get("SUM(purchase_amount)") 
+        # try:
+        # cursor.execute(request)
+        # return True
+        # except:
+        # return False
+        valid = False
+        # spotify
+        try:
+            cursor.execute("SELECT spotify FROM subscriptions WHERE sub_date = '082022';")
+            spot_resultA = cursor.fetchone()
+            spot_resultA = spot_resultA.get("spotify")
+            valid = True
+        except:
+            valid = False
+        
+        if valid == True:
+            # spot_resultA = cursor.fetchone()
+            # spot_resultA = spot_resultA.get("spotify")
+            print(spot_resultA)
 
-        #Adds up purchases in grocery section from current month
-        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Groceries' AND purchase_date LIKE (%s);", 
-        val)
-        result = cursor.fetchone()
-        groceries_sum = result.get("SUM(purchase_amount)")
+        try:
+            cursor.execute("SELECT spotify FROM subscriptions WHERE sub_date = '092022';")
+            spot_resultS = cursor.fetchone()
+            spot_resultS = spot_resultS.get("spotify")
+            valid = True
+        except:
+            valid = False
+        
+        if valid == True:
+            # spot_resultS = cursor.fetchone()
+            # spot_resultS = spot_resultS.get("spotify")
+            print(spot_resultS)
 
-        #Adds up purchases in outtings section from current month
-        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Outtings' AND purchase_date LIKE (%s);", 
-        val)
-        result = cursor.fetchone()
-        outtings_sum = result.get("SUM(purchase_amount)")
+        try:
+            cursor.execute("SELECT spotify FROM subscriptions WHERE sub_date = '102022';")
+            spot_resultO = cursor.fetchone()
+            spot_resultO = spot_resultO.get("spotify")
+            valid = True
+        except:
+            valid = False
+        
+        if valid == True:
+            # spot_resultO = cursor.fetchone()
+            # spot_resultO = spot_resultO.get("spotify")
+            print(spot_resultO)
+        
+        try:
+            cursor.execute("SELECT spotify FROM subscriptions WHERE sub_date = '112022';")
+            spot_resultN = cursor.fetchone()
+            spot_resultN = spot_resultN.get("spotify")
+            valid = True
+        except:
+            valid = False
+        
+        if valid == True:
+            # spot_resultN = cursor.fetchone()
+            # spot_resultN = spot_resultN.get("spotify")
+            print(spot_resultN)
 
-        #Adds up purchases in the personal section from current month
-        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Personal' AND purchase_date LIKE (%s);", 
-        val)
-        result = cursor.fetchone()
-        personal_sum = result.get("SUM(purchase_amount)")
+        # Netflix
+        try:
+            cursor.execute("SELECT netflix FROM subscriptions WHERE sub_date = '082022';")
+            net_resultA = cursor.fetchone()
+            net_resultA = net_resultA.get("netflix")
+            valid = True
+        except:
+            valid = False
+        
+        if valid == True:
+            # net_resultA = cursor.fetchone()
+            # net_resultA = net_resultA.get("netflix")
+            print(net_resultA)
 
-        #Gets proposed budget from db
-        cursor.execute("SELECT * from user_budget")
-        result = cursor.fetchone()        
+        try:
+            cursor.execute("SELECT netflix FROM subscriptions WHERE sub_date = '092022';")
+            net_resultS = cursor.fetchone()
+            net_resultS = net_resultS.get("netflix")
+            valid = True
+        except:
+            valid = False
+        
+        if valid == True:
+            # net_resultS = cursor.fetchone()
+            # net_resultS = net_resultS.get("netflix")
+            print(spot_resultS)
 
-        #Gets individual budget per category
-        house_budget = result.get("House_Budget")
-        groceries_budget = result.get("Groceries_Budget")
-        outtings_budget = result.get("Outtings_Budget")
-        personal_budget = result.get("Personal_Budget")
+        try:
+            cursor.execute("SELECT netflix FROM subscriptions WHERE sub_date = '102022';")
+            net_resultO = cursor.fetchone()
+            net_resultO = net_resultO.get("netflix")
+            valid = True
+        except:
+            valid = False
+        
+        if valid == True:
+            # net_resultO = cursor.fetchone()
+            # net_resultO = net_resultO.get("netflix")
+            print(net_resultO)
 
-        budget_sum = house_budget + groceries_budget + outtings_budget + personal_budget
-        # expense graph
-        set0 = QBarSet('Housing')  # need to pull from db
-        set1 = QBarSet('Groceries')
-        set2 = QBarSet('Outings')
-        set3 = QBarSet('Personal')
-        set4 = QBarSet('Available funds')
+        try:
+            cursor.execute("SELECT netflix FROM subscriptions WHERE sub_date = '112022';")
+            net_resultN = cursor.fetchone()
+            net_resultN = net_resultN.get("netflix")
+            valid = True
+        except:
+            valid = False
+        
+        if valid == True:
+            # net_resultN = cursor.fetchone()
+            # net_resultN = net_resultN.get("netflix")
+            print(net_resultN)
 
-        set0.append([house_sum])  # need to pull from db
-        set1.append([groceries_sum])
-        set2.append([outtings_sum])
-        set3.append([personal_sum])
-        set4.append([(budget_sum-set0[0]-set1[0]-set2[0]-set3[0])])
+        # Apple Music
+        try:
+            cursor.execute("SELECT apple_music FROM subscriptions WHERE sub_date = '082022';")
+            appM_resultA = cursor.fetchone()
+            appM_resultA = appM_resultA.get("apple_music")
+            valid = True
+        except:
+            valid = False
+        
+        if valid == True:
+            # appM_resultA = cursor.fetchone()
+            # appM_resultA = appM_resultA.get("apple_music")
+            print(appM_resultA)
 
-        series = QPercentBarSeries()  # !!!!!!!!!
-        series.append(set0)
-        series.append(set1)
-        series.append(set2)
-        series.append(set3)
-        series.append(set4)
+        try:
+            cursor.execute("SELECT apple_music FROM subscriptions WHERE sub_date = '092022';")
+            appM_resultS = cursor.fetchone()
+            appM_resultS = appM_resultS.get("apple_music")
+            valid = True
+        except:
+            valid = False
+        
+        if valid == True:
+            # appM_resultS = cursor.fetchone()
+            # appM_resultS = appM_resultS.get("apple_music")
+            print(spot_resultS)
 
-        chart.addSeries(series)
-        chart.setTitle('Budget Usage')
-        chart.setAnimationOptions(QChart.SeriesAnimations)
+        try:
+            cursor.execute("SELECT apple_music FROM subscriptions WHERE sub_date = '102022';")
+            appM_resultO = cursor.fetchone()
+            appM_resultO = appM_resultO.get("apple_music")
+            valid = True
+        except:
+            valid = False
+        
+        if valid == True:
+            # appM_resultO = cursor.fetchone()
+            # appM_resultO = appM_resultO.get("apple_music")
+            print(appM_resultO)
 
-        cur_month = months_map[date_string[0:2]]
-        months = (cur_month)
-        axisX = QBarCategoryAxis()
-        axisX.append(months)
-        axisY = QValueAxis()
-        axisY.setRange(0, budget_sum)
-
-        chart.addAxis(axisX, Qt.AlignBottom)
-        chart.addAxis(axisY, Qt.AlignLeft)
-
-        chart.legend().setVisible(True)
-        chart.legend().setAlignment(Qt.AlignBottom)
-
-    
+        try:
+            cursor.execute("SELECT apple_music FROM subscriptions WHERE sub_date = '112022';")
+            appM_resultN = cursor.fetchone()
+            appM_resultN = appM_resultN.get("apple_music")
+            valid = True
+        except:
+            valid = False
+        
+        if valid == True:
+            # appM_resultN = cursor.fetchone()
+            # appM_resultN = appM_resultN.get("apple_music")
+            print(appM_resultN)
     #Sets up homescreen of labels from the budget
     def updateHomescreen(self):
-        #Adds up purchases in housing section from current month
-        val = date_string[0:2] + "__" + date_string[4:8]
-        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Housing' AND purchase_date LIKE (%s);", 
-        val)
+        #Adds up purchases in housing section
+        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Housing';")
         result = cursor.fetchone()
         house_sum = result.get("SUM(purchase_amount)") 
 
-        #Adds up purchases in grocery section from current month
-        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Groceries' AND purchase_date LIKE (%s);", 
-        val)
+        #Adds up purchases in grocery section
+        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Groceries';")
         result = cursor.fetchone()
         groceries_sum = result.get("SUM(purchase_amount)")
 
-        #Adds up purchases in outtings section from current month
-        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Outtings' AND purchase_date LIKE (%s);", 
-        val)
+        #Adds up purchases in outtings section
+        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Outtings';")
         result = cursor.fetchone()
         outtings_sum = result.get("SUM(purchase_amount)")
 
-        #Adds up purchases in the personal section from current month
-        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Personal' AND purchase_date LIKE (%s);", 
-        val)
+        #Adds up purchases in the personal section
+        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Personal';")
         result = cursor.fetchone()
         personal_sum = result.get("SUM(purchase_amount)")
 
@@ -204,112 +302,8 @@ class MyGUI(QMainWindow):
         self.stackedWidget.setCurrentIndex(2)
 
     #Sends us to see transactions screen
-    def on_pushButton_3(self, chart):
+    def on_pushButton_3(self):
         self.stackedWidget.setCurrentIndex(3)
-        set0 = QBarSet('Housing')  # need to pull from db
-        set1 = QBarSet('Groceries')
-        set2 = QBarSet('Outings')
-        set3 = QBarSet('Personal')
-
-        #Adds up purchases in housing section from current month
-        val = date_string[0:2] + "__" + date_string[4:8]
-
-        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Housing' AND purchase_date LIKE (%s);", 
-        val)
-        result = cursor.fetchone()
-        house_sum = result.get("SUM(purchase_amount)")
-
-        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Housing' AND purchase_date LIKE (%s);", 
-        "10__2022")
-        result = cursor.fetchone()
-        house_sum_2 = result.get("SUM(purchase_amount)") 
-
-        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Housing' AND purchase_date LIKE (%s);", 
-        "09__2022")
-        result = cursor.fetchone()
-        house_sum_3 = result.get("SUM(purchase_amount)") 
-
-        #Adds up purchases in grocery section from current month
-        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Groceries' AND purchase_date LIKE (%s);", 
-        val)
-        result = cursor.fetchone()
-        groceries_sum = result.get("SUM(purchase_amount)")
-
-        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Groceries' AND purchase_date LIKE (%s);", 
-        "10__2022")
-        result = cursor.fetchone()
-        groceries_sum_2 = result.get("SUM(purchase_amount)")
-
-        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Groceries' AND purchase_date LIKE (%s);", 
-        "09__2022")
-        result = cursor.fetchone()
-        groceries_sum_3 = result.get("SUM(purchase_amount)")
-
-        #Adds up purchases in outtings section from current month
-        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Outtings' AND purchase_date LIKE (%s);", 
-        val)
-        result = cursor.fetchone()
-        outtings_sum = result.get("SUM(purchase_amount)")
-
-        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Outtings' AND purchase_date LIKE (%s);", 
-        "10__2022")
-        result = cursor.fetchone()
-        outtings_sum_2 = result.get("SUM(purchase_amount)")
-
-        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Outtings' AND purchase_date LIKE (%s);", 
-        "09__2022")
-        result = cursor.fetchone()
-        outtings_sum_3 = result.get("SUM(purchase_amount)")
-
-        #Adds up purchases in the personal section from current month
-        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Personal' AND purchase_date LIKE (%s);", 
-        val)
-        result = cursor.fetchone()
-        personal_sum = result.get("SUM(purchase_amount)")
-
-        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Personal' AND purchase_date LIKE (%s);", 
-        "10__2022")
-        result = cursor.fetchone()
-        personal_sum_2 = result.get("SUM(purchase_amount)")
-
-        cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Personal' AND purchase_date LIKE (%s);", 
-        "09__2022")
-        result = cursor.fetchone()
-        personal_sum_3 = result.get("SUM(purchase_amount)")
-
-        set0.append([house_sum, house_sum_2, house_sum_3])  # need to pull from db
-        set1.append([groceries_sum, groceries_sum_2, groceries_sum_3])
-        set2.append([outtings_sum, outtings_sum_2, outtings_sum_3])
-        set3.append([personal_sum, personal_sum_2, personal_sum_3])
-
-        series = QBarSeries()
-        series.append(set0)
-        series.append(set1)
-        series.append(set2)
-        series.append(set3)
-
-        chart = QChart()
-        chart.addSeries(series)
-        chart.setTitle('Past Spending')
-        chart.setAnimationOptions(QChart.SeriesAnimations)
-
-        months = ('Sept', 'Oct', 'Nov')
-        axisX = QBarCategoryAxis()
-        axisX.append(months)
-
-        axisY = QValueAxis()
-        axisY.setRange(0, 1800)
-
-        chart.addAxis(axisX, Qt.AlignBottom)
-        chart.addAxis(axisY, Qt.AlignLeft)
-
-        chart.legend().setVisible(True)
-        chart.legend().setAlignment(Qt.AlignBottom)
-
-        chartView = QChartView(chart)
-        if visited:
-            self.horizontalLayout_3.addWidget(chartView)
-        visited[0] = False
 
     #Back button - edit transactions screen
     def on_pushButton_8(self):
@@ -318,10 +312,10 @@ class MyGUI(QMainWindow):
     #Back button - enter transactions screen
     def on_pushButton_10(self):
         self.stackedWidget.setCurrentIndex(0)
-
-    #Back button - see transactions screen
-    def on_pushButton_12(self):
-        self.stackedWidget.setCurrentIndex(0)
+    
+    #tracker button - enter transactions screen
+    def on_pushButton_11(self):
+        self.stackedWidget.setCurrentIndex(4)
     
     #Updates database to edit home budget
     def on_pushButton_4(self):
@@ -359,6 +353,7 @@ class MyGUI(QMainWindow):
         name = self.lineEdit_6.text()
         amount = self.lineEdit_7.text()
         p_type = comboBox_map[self.comboBox.currentIndex()]
+        print(p_type)
         val = (purchase_id, 1, p_type, date, name, amount)
         cursor.execute("INSERT INTO customer_purchases (purchase_id, customer_id, purchase_type, purchase_date, purchase_name, purchase_amount) VALUES ((%s), (%s), (%s), (%s), (%s), (%s));", 
         val)
