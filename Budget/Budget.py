@@ -22,8 +22,10 @@ cursor = db.cursor()#Db cursor
 today = date.today()
 # mm/dd/yy
 d = today.strftime("%m/%d/%y")
-date_string = d[0:2] + d[3:5] + "20" +d[6:8]
-visited = True
+# date_string = d[0:2] + d[3:5] + "20" + d[6:8]
+date_string = "11" + d[3:5] + "20" + d[6:8]
+graph_expenses = True
+graph_subscriptions = True
 
 class MyGUI(QMainWindow):
     def __init__(self):
@@ -31,9 +33,9 @@ class MyGUI(QMainWindow):
         uic.loadUi("mainwindow.ui", self) #Retrieves ui from qt creator
         self.updateHomescreen()#Updates labels on home screen        
         chart = QChart()
-        self.changeSeries(chart)
+        self.changeSeries(chart)     
         chartView = QChartView(chart)
-        self.gridLayout_4.addWidget(chartView)
+        self.gridLayout_4.addWidget(chartView)   
 
         welcome = "Your expenses for " + months_map[date_string[0:2]] + ":"
         self.label_18.setText(welcome)
@@ -47,14 +49,20 @@ class MyGUI(QMainWindow):
         #See transactions button
         self.pushButton_3.clicked.connect(self.on_pushButton_3)
 
+        #See subscriptions pressed
+        self.pushButton_11.clicked.connect(self.on_pushButton_11)
+
         #Back button on edit transactions
-        self.pushButton_8.clicked.connect(self.on_pushButton_8)
+        self.pushButton_8.clicked.connect(lambda: self.on_pushButton_8(chart))
 
         #Back button on enter transactions
-        self.pushButton_10.clicked.connect(self.on_pushButton_10)
+        self.pushButton_10.clicked.connect(lambda: self.on_pushButton_10(chart))
 
         #Back button on see transactions
         self.pushButton_12.clicked.connect(self.on_pushButton_12)
+
+        #Back button on see subscriptions
+        self.pushButton_13.clicked.connect(self.on_pushButton_13)
 
         #Done button on enter transactions-Housing
         self.pushButton_4.clicked.connect(self.on_pushButton_4)
@@ -191,10 +199,28 @@ class MyGUI(QMainWindow):
         outtings = '$' + str(outtings_sum) + ' / $' + str(outtings_budget)
         personal = '$' + str(personal_sum) + ' / $' + str(personal_budget)
         self.label_3.setText(house)
-        self.label_4.setText(groceries)
-        self.label_6.setText(outtings)
-        self.label_8.setText(personal)
+        if house_sum > house_budget:
+            self.label_3.setStyleSheet("background-color: red;")
+        elif house_sum > house_budget * .8:
+            self.label_3.setStyleSheet("background-color: yellow;")
 
+        self.label_4.setText(groceries)
+        if groceries_sum > groceries_budget:
+            self.label_4.setStyleSheet("background-color: red;")
+        elif groceries_sum > groceries_budget * .8:
+            self.label_4.setStyleSheet("background-color: yellow;")
+
+        self.label_6.setText(outtings)
+        if outtings_sum > outtings_budget:
+            self.label_6.setStyleSheet("background-color: red;")
+        elif outtings_sum > outtings_budget * .8:
+            self.label_6.setStyleSheet("background-color: yellow;")
+
+        self.label_8.setText(personal)
+        if personal_sum > personal_budget:
+            self.label_8.setStyleSheet("background-color: red;")
+        elif personal_sum > personal_budget * .8:
+            self.label_8.setStyleSheet("background-color: yellow;")
     #Sends us to edit budget screen
     def on_pushButton(self):
         self.stackedWidget.setCurrentIndex(1)
@@ -203,8 +229,215 @@ class MyGUI(QMainWindow):
     def on_pushButton_2(self):
         self.stackedWidget.setCurrentIndex(2)
 
+    #See subscriptions button
+    def on_pushButton_11(self):
+        global graph_subscriptions
+        self.stackedWidget.setCurrentIndex(4)
+        set4 = QBarSet('Spotify')  # need to pull from db
+        set5 = QBarSet('Netflix')
+        set6 = QBarSet('Apple Music')
+
+        valid = False
+        # spotify
+        try:
+            cursor.execute("SELECT spotify FROM subscriptions WHERE sub_date = '082022';")
+            spot_resultA = cursor.fetchone()
+            spot_resultA = spot_resultA.get("spotify")
+            valid = True
+        except:
+            valid = False
+        
+        if valid == True:
+            # spot_resultA = cursor.fetchone()
+            # spot_resultA = spot_resultA.get("spotify")
+            print(spot_resultA)
+
+        try:
+            cursor.execute("SELECT spotify FROM subscriptions WHERE sub_date = '092022';")
+            spot_resultS = cursor.fetchone()
+            spot_resultS = spot_resultS.get("spotify")
+            valid = True
+        except:
+            valid = False
+        
+        if valid == True:
+            # spot_resultS = cursor.fetchone()
+            # spot_resultS = spot_resultS.get("spotify")
+            print(spot_resultS)
+
+        try:
+            cursor.execute("SELECT spotify FROM subscriptions WHERE sub_date = '102022';")
+            spot_resultO = cursor.fetchone()
+            spot_resultO = spot_resultO.get("spotify")
+            valid = True
+        except:
+            valid = False
+        
+        if valid == True:
+            # spot_resultO = cursor.fetchone()
+            # spot_resultO = spot_resultO.get("spotify")
+            print(spot_resultO)
+        
+        try:
+            cursor.execute("SELECT spotify FROM subscriptions WHERE sub_date = '112022';")
+            spot_resultN = cursor.fetchone()
+            spot_resultN = spot_resultN.get("spotify")
+            valid = True
+        except:
+            valid = False
+        
+        if valid == True:
+            # spot_resultN = cursor.fetchone()
+            # spot_resultN = spot_resultN.get("spotify")
+            print(spot_resultN)
+
+        # Netflix
+        try:
+            cursor.execute("SELECT netflix FROM subscriptions WHERE sub_date = '082022';")
+            net_resultA = cursor.fetchone()
+            net_resultA = net_resultA.get("netflix")
+            valid = True
+        except:
+            valid = False
+        
+        if valid == True:
+            # net_resultA = cursor.fetchone()
+            # net_resultA = net_resultA.get("netflix")
+            print(net_resultA)
+
+        try:
+            cursor.execute("SELECT netflix FROM subscriptions WHERE sub_date = '092022';")
+            net_resultS = cursor.fetchone()
+            net_resultS = net_resultS.get("netflix")
+            valid = True
+        except:
+            valid = False
+        
+        if valid == True:
+            # net_resultS = cursor.fetchone()
+            # net_resultS = net_resultS.get("netflix")
+            print(spot_resultS)
+
+        try:
+            cursor.execute("SELECT netflix FROM subscriptions WHERE sub_date = '102022';")
+            net_resultO = cursor.fetchone()
+            net_resultO = net_resultO.get("netflix")
+            valid = True
+        except:
+            valid = False
+        
+        if valid == True:
+            # net_resultO = cursor.fetchone()
+            # net_resultO = net_resultO.get("netflix")
+            print(net_resultO)
+
+        try:
+            cursor.execute("SELECT netflix FROM subscriptions WHERE sub_date = '112022';")
+            net_resultN = cursor.fetchone()
+            net_resultN = net_resultN.get("netflix")
+            valid = True
+        except:
+            valid = False
+        
+        if valid == True:
+            # net_resultN = cursor.fetchone()
+            # net_resultN = net_resultN.get("netflix")
+            print(net_resultN)
+
+        # Apple Music
+        try:
+            cursor.execute("SELECT apple_music FROM subscriptions WHERE sub_date = '082022';")
+            appM_resultA = cursor.fetchone()
+            appM_resultA = appM_resultA.get("apple_music")
+            valid = True
+        except:
+            valid = False
+        
+        if valid == True:
+            # appM_resultA = cursor.fetchone()
+            # appM_resultA = appM_resultA.get("apple_music")
+            print(appM_resultA)
+
+        try:
+            cursor.execute("SELECT apple_music FROM subscriptions WHERE sub_date = '092022';")
+            appM_resultS = cursor.fetchone()
+            appM_resultS = appM_resultS.get("apple_music")
+            valid = True
+        except:
+            valid = False
+        
+        if valid == True:
+            # appM_resultS = cursor.fetchone()
+            # appM_resultS = appM_resultS.get("apple_music")
+            print(spot_resultS)
+
+        try:
+            cursor.execute("SELECT apple_music FROM subscriptions WHERE sub_date = '102022';")
+            appM_resultO = cursor.fetchone()
+            appM_resultO = appM_resultO.get("apple_music")
+            valid = True
+        except:
+            valid = False
+        
+        if valid == True:
+            # appM_resultO = cursor.fetchone()
+            # appM_resultO = appM_resultO.get("apple_music")
+            print(appM_resultO)
+
+        try:
+            cursor.execute("SELECT apple_music FROM subscriptions WHERE sub_date = '112022';")
+            appM_resultN = cursor.fetchone()
+            appM_resultN = appM_resultN.get("apple_music")
+            valid = True
+        except:
+            valid = False
+        
+        if valid == True:
+            # appM_resultN = cursor.fetchone()
+            # appM_resultN = appM_resultN.get("apple_music")
+            print(appM_resultN)
+        cursor.execute("SELECT * FROM subscriptions ;")
+        print(cursor.fetchall())
+        set4.append([spot_resultA, spot_resultS, spot_resultO, spot_resultN])  # need to pull from db
+        set5.append([net_resultA, net_resultS, net_resultO, net_resultN])
+        set6.append([appM_resultA, appM_resultS, appM_resultO, appM_resultN])
+
+        temp = [spot_resultA, spot_resultS, spot_resultO, spot_resultN, net_resultA, 
+        net_resultS, net_resultO, net_resultN, appM_resultA, appM_resultS, appM_resultO, appM_resultN]
+        ceiling = max(temp)
+
+        series = QBarSeries()
+        series.append(set4)
+        series.append(set5)
+        series.append(set6)
+
+        chart = QChart()
+        chart.addSeries(series)
+        chart.setTitle('Subscription Usage')
+        chart.setAnimationOptions(QChart.SeriesAnimations)
+
+        months = ('Aug', 'Sept', 'Oct', 'Nov')
+        axisX = QBarCategoryAxis()
+        axisX.append(months)
+
+        axisY = QValueAxis()
+        axisY.setRange(0, ceiling)
+
+        chart.addAxis(axisX, Qt.AlignBottom)
+        chart.addAxis(axisY, Qt.AlignLeft)
+        # chart.createDefaultAxes()
+
+        chart.legend().setVisible(True)
+        chart.legend().setAlignment(Qt.AlignBottom)
+
+        chartView = QChartView(chart)
+        if graph_subscriptions:
+            self.horizontalLayout_4.addWidget(chartView)
+            graph_subscriptions = False
+    
     #Sends us to see transactions screen
     def on_pushButton_3(self, chart):
+        global graph_expenses
         self.stackedWidget.setCurrentIndex(3)
         set0 = QBarSet('Housing')  # need to pull from db
         set1 = QBarSet('Groceries')
@@ -277,11 +510,14 @@ class MyGUI(QMainWindow):
         result = cursor.fetchone()
         personal_sum_3 = result.get("SUM(purchase_amount)")
 
-        set0.append([house_sum, house_sum_2, house_sum_3])  # need to pull from db
-        set1.append([groceries_sum, groceries_sum_2, groceries_sum_3])
-        set2.append([outtings_sum, outtings_sum_2, outtings_sum_3])
-        set3.append([personal_sum, personal_sum_2, personal_sum_3])
+        set0.append([house_sum_3, house_sum_2, house_sum])  # need to pull from db
+        set1.append([groceries_sum_3, groceries_sum_2, groceries_sum])
+        set2.append([outtings_sum_3, outtings_sum_2, outtings_sum])
+        set3.append([personal_sum_3, personal_sum_2, personal_sum])
 
+        temp = [house_sum_3, house_sum_2, house_sum, groceries_sum_3, groceries_sum_2, groceries_sum,
+        outtings_sum_3, outtings_sum_2, outtings_sum, personal_sum_3, personal_sum_2, personal_sum]
+        ceiling = max(temp)
         series = QBarSeries()
         series.append(set0)
         series.append(set1)
@@ -298,7 +534,7 @@ class MyGUI(QMainWindow):
         axisX.append(months)
 
         axisY = QValueAxis()
-        axisY.setRange(0, 1800)
+        axisY.setRange(0, ceiling)
 
         chart.addAxis(axisX, Qt.AlignBottom)
         chart.addAxis(axisY, Qt.AlignLeft)
@@ -307,20 +543,28 @@ class MyGUI(QMainWindow):
         chart.legend().setAlignment(Qt.AlignBottom)
 
         chartView = QChartView(chart)
-        if visited:
+        if graph_expenses:
             self.horizontalLayout_3.addWidget(chartView)
-        visited[0] = False
+            graph_expenses = False
 
     #Back button - edit transactions screen
-    def on_pushButton_8(self):
+    def on_pushButton_8(self, chart):
         self.stackedWidget.setCurrentIndex(0)
+        self.updateHomescreen()
+        self.changeSeries(chart)
     
     #Back button - enter transactions screen
-    def on_pushButton_10(self):
+    def on_pushButton_10(self, chart):
         self.stackedWidget.setCurrentIndex(0)
+        self.updateHomescreen()
+        self.changeSeries(chart)
 
     #Back button - see transactions screen
     def on_pushButton_12(self):
+        self.stackedWidget.setCurrentIndex(0)
+
+    #Back button - see subscriptions screen
+    def on_pushButton_13(self):
         self.stackedWidget.setCurrentIndex(0)
     
     #Updates database to edit home budget
