@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtChart import *
+from PyQt5 import QtWidgets, QtCore
 from datetime import date
 from PyQt5 import uic
 from PyQt5.Qt import Qt
@@ -7,10 +8,30 @@ import random
 import pymysql
 
 months_map = {"01":"January",
+            "02":"February",
+            "03":"March",
+            "04":"April",
+            "05":"May",
+            "06":"June",
+            "07":"July",
+            "08":"August",
             "09": "September",
             "10" : "October",
             "11" : "November",
             "12" : "December"}
+
+months_int = {"01":1,
+            "02":2,
+            "03":3,
+            "04":4,
+            "05":5,
+            "06":6,
+            "07":7,
+            "08":8,
+            "09": 9,
+            "10" : 10,
+            "11" : 11,
+            "12" : 12}
 #Connect to db
 db = pymysql.connect(host='budgetwatcher.cfwqbytexmh5.us-east-1.rds.amazonaws.com',
                              user='admin',
@@ -22,8 +43,7 @@ cursor = db.cursor()#Db cursor
 today = date.today()
 # mm/dd/yy
 d = today.strftime("%m/%d/%y")
-# date_string = d[0:2] + d[3:5] + "20" + d[6:8]
-date_string = "11" + d[3:5] + "20" + d[6:8]
+date_string = d[0:2] + d[3:5] + "20" + d[6:8]
 graph_expenses = True
 graph_subscriptions = True
 
@@ -194,10 +214,10 @@ class MyGUI(QMainWindow):
         personal_budget = result.get("Personal_Budget")
 
         #Creates labels to be displayed on home screen
-        house = '$' + str(house_sum) + ' / $' + str(house_budget)
-        groceries = '$' + str(groceries_sum) + ' / $' + str(groceries_budget)
-        outtings = '$' + str(outtings_sum) + ' / $' + str(outtings_budget)
-        personal = '$' + str(personal_sum) + ' / $' + str(personal_budget)
+        house = '$' + str(round(house_sum, 2)) + ' / $' + str(round(house_budget, 2))
+        groceries = '$' + str(round(groceries_sum, 2)) + ' / $' + str(round(groceries_budget, 2))
+        outtings = '$' + str(round(outtings_sum, 2)) + ' / $' + str(round(outtings_budget, 2))
+        personal = '$' + str(round(personal_sum, 2)) + ' / $' + str(round(personal_budget, 2))
         self.label_3.setText(house)
         if house_sum > house_budget:
             self.label_3.setStyleSheet("background-color: red;")
@@ -246,11 +266,6 @@ class MyGUI(QMainWindow):
             valid = True
         except:
             valid = False
-        
-        if valid == True:
-            # spot_resultA = cursor.fetchone()
-            # spot_resultA = spot_resultA.get("spotify")
-            print(spot_resultA)
 
         try:
             cursor.execute("SELECT spotify FROM subscriptions WHERE sub_date = '092022';")
@@ -260,11 +275,6 @@ class MyGUI(QMainWindow):
         except:
             valid = False
         
-        if valid == True:
-            # spot_resultS = cursor.fetchone()
-            # spot_resultS = spot_resultS.get("spotify")
-            print(spot_resultS)
-
         try:
             cursor.execute("SELECT spotify FROM subscriptions WHERE sub_date = '102022';")
             spot_resultO = cursor.fetchone()
@@ -273,10 +283,6 @@ class MyGUI(QMainWindow):
         except:
             valid = False
         
-        if valid == True:
-            # spot_resultO = cursor.fetchone()
-            # spot_resultO = spot_resultO.get("spotify")
-            print(spot_resultO)
         
         try:
             cursor.execute("SELECT spotify FROM subscriptions WHERE sub_date = '112022';")
@@ -285,11 +291,6 @@ class MyGUI(QMainWindow):
             valid = True
         except:
             valid = False
-        
-        if valid == True:
-            # spot_resultN = cursor.fetchone()
-            # spot_resultN = spot_resultN.get("spotify")
-            print(spot_resultN)
 
         # Netflix
         try:
@@ -299,11 +300,6 @@ class MyGUI(QMainWindow):
             valid = True
         except:
             valid = False
-        
-        if valid == True:
-            # net_resultA = cursor.fetchone()
-            # net_resultA = net_resultA.get("netflix")
-            print(net_resultA)
 
         try:
             cursor.execute("SELECT netflix FROM subscriptions WHERE sub_date = '092022';")
@@ -312,11 +308,6 @@ class MyGUI(QMainWindow):
             valid = True
         except:
             valid = False
-        
-        if valid == True:
-            # net_resultS = cursor.fetchone()
-            # net_resultS = net_resultS.get("netflix")
-            print(spot_resultS)
 
         try:
             cursor.execute("SELECT netflix FROM subscriptions WHERE sub_date = '102022';")
@@ -325,11 +316,6 @@ class MyGUI(QMainWindow):
             valid = True
         except:
             valid = False
-        
-        if valid == True:
-            # net_resultO = cursor.fetchone()
-            # net_resultO = net_resultO.get("netflix")
-            print(net_resultO)
 
         try:
             cursor.execute("SELECT netflix FROM subscriptions WHERE sub_date = '112022';")
@@ -338,11 +324,6 @@ class MyGUI(QMainWindow):
             valid = True
         except:
             valid = False
-        
-        if valid == True:
-            # net_resultN = cursor.fetchone()
-            # net_resultN = net_resultN.get("netflix")
-            print(net_resultN)
 
         # Apple Music
         try:
@@ -352,11 +333,6 @@ class MyGUI(QMainWindow):
             valid = True
         except:
             valid = False
-        
-        if valid == True:
-            # appM_resultA = cursor.fetchone()
-            # appM_resultA = appM_resultA.get("apple_music")
-            print(appM_resultA)
 
         try:
             cursor.execute("SELECT apple_music FROM subscriptions WHERE sub_date = '092022';")
@@ -365,11 +341,6 @@ class MyGUI(QMainWindow):
             valid = True
         except:
             valid = False
-        
-        if valid == True:
-            # appM_resultS = cursor.fetchone()
-            # appM_resultS = appM_resultS.get("apple_music")
-            print(spot_resultS)
 
         try:
             cursor.execute("SELECT apple_music FROM subscriptions WHERE sub_date = '102022';")
@@ -378,11 +349,6 @@ class MyGUI(QMainWindow):
             valid = True
         except:
             valid = False
-        
-        if valid == True:
-            # appM_resultO = cursor.fetchone()
-            # appM_resultO = appM_resultO.get("apple_music")
-            print(appM_resultO)
 
         try:
             cursor.execute("SELECT apple_music FROM subscriptions WHERE sub_date = '112022';")
@@ -391,13 +357,7 @@ class MyGUI(QMainWindow):
             valid = True
         except:
             valid = False
-        
-        if valid == True:
-            # appM_resultN = cursor.fetchone()
-            # appM_resultN = appM_resultN.get("apple_music")
-            print(appM_resultN)
         cursor.execute("SELECT * FROM subscriptions ;")
-        print(cursor.fetchall())
         set4.append([spot_resultA, spot_resultS, spot_resultO, spot_resultN])  # need to pull from db
         set5.append([net_resultA, net_resultS, net_resultO, net_resultN])
         set6.append([appM_resultA, appM_resultS, appM_resultO, appM_resultN])
@@ -425,7 +385,6 @@ class MyGUI(QMainWindow):
 
         chart.addAxis(axisX, Qt.AlignBottom)
         chart.addAxis(axisY, Qt.AlignLeft)
-        # chart.createDefaultAxes()
 
         chart.legend().setVisible(True)
         chart.legend().setAlignment(Qt.AlignBottom)
@@ -439,7 +398,7 @@ class MyGUI(QMainWindow):
     def on_pushButton_3(self, chart):
         global graph_expenses
         self.stackedWidget.setCurrentIndex(3)
-        set0 = QBarSet('Housing')  # need to pull from db
+        set0 = QBarSet('Housing') 
         set1 = QBarSet('Groceries')
         set2 = QBarSet('Outings')
         set3 = QBarSet('Personal')
@@ -451,6 +410,7 @@ class MyGUI(QMainWindow):
         val)
         result = cursor.fetchone()
         house_sum = result.get("SUM(purchase_amount)")
+
 
         cursor.execute("SELECT SUM(purchase_amount) FROM customer_purchases WHERE purchase_type = 'Housing' AND purchase_date LIKE (%s);", 
         "10__2022")
@@ -510,7 +470,7 @@ class MyGUI(QMainWindow):
         result = cursor.fetchone()
         personal_sum_3 = result.get("SUM(purchase_amount)")
 
-        set0.append([house_sum_3, house_sum_2, house_sum])  # need to pull from db
+        set0.append([house_sum_3, house_sum_2, house_sum])  
         set1.append([groceries_sum_3, groceries_sum_2, groceries_sum])
         set2.append([outtings_sum_3, outtings_sum_2, outtings_sum])
         set3.append([personal_sum_3, personal_sum_2, personal_sum])
@@ -547,17 +507,15 @@ class MyGUI(QMainWindow):
             self.horizontalLayout_3.addWidget(chartView)
             graph_expenses = False
 
-    #Back button - edit transactions screen
+    #Back button - edit budget screen
     def on_pushButton_8(self, chart):
         self.stackedWidget.setCurrentIndex(0)
         self.updateHomescreen()
-        self.changeSeries(chart)
     
     #Back button - enter transactions screen
     def on_pushButton_10(self, chart):
         self.stackedWidget.setCurrentIndex(0)
         self.updateHomescreen()
-        self.changeSeries(chart)
 
     #Back button - see transactions screen
     def on_pushButton_12(self):
@@ -572,24 +530,28 @@ class MyGUI(QMainWindow):
         new_budget = self.lineEdit.text()
         cursor.execute("UPDATE user_budget SET House_Budget = (%s) WHERE Customer_ID = 1;", new_budget)
         db.commit()
+        self.lineEdit.clear()
         self.updateHomescreen()
     #Updates database to edit groceries budget
     def on_pushButton_5(self):
         new_budget = self.lineEdit_2.text()
         cursor.execute("UPDATE user_budget SET Groceries_Budget = (%s) WHERE Customer_ID = 1;", new_budget)
         db.commit()
+        self.lineEdit_2.clear()
         self.updateHomescreen()
     #Updates database to edit outtings budget
     def on_pushButton_6(self):
         new_budget = self.lineEdit_3.text()
         cursor.execute("UPDATE user_budget SET Outtings_Budget = (%s) WHERE Customer_ID = 1;", new_budget)
         db.commit()
+        self.lineEdit_3.clear()
         self.updateHomescreen()
     #Updates database to edit personal budget
     def on_pushButton_7(self):
         new_budget = self.lineEdit_4.text()
         cursor.execute("UPDATE user_budget SET Personal_Budget = (%s) WHERE Customer_ID = 1;", new_budget)
         db.commit()
+        self.lineEdit_4.clear()
         self.updateHomescreen()
 
     #creates new purchase
@@ -607,6 +569,9 @@ class MyGUI(QMainWindow):
         cursor.execute("INSERT INTO customer_purchases (purchase_id, customer_id, purchase_type, purchase_date, purchase_name, purchase_amount) VALUES ((%s), (%s), (%s), (%s), (%s), (%s));", 
         val)
         db.commit()
+        self.lineEdit_5.clear()
+        self.lineEdit_6.clear()
+        self.lineEdit_7.clear()
         self.updateHomescreen()
 
 def main ():
