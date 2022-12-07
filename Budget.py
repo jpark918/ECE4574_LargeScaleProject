@@ -14,15 +14,14 @@ import pymysql
  *	This file connects to the database where user data/information is stored.
  * 	The file then displays user data on the default executable page with a graph displaying
  *	the total budget spent/available during the current month.
+ *  User interaction allows them to view different 'pages' and view different graphs such as
+ *  subscription/expenses.
  *	For the purpose of this project, Shoaib's web subscription data has been monitored and 
  * 	used.
  *	Shoaib has contributed with data retrieval and GUI
  *	Atta-Boakye has contributed with the database and GUI and data access
  *	Park has contributed with the GUI and Graphs and data access
  */
-
-
-
 
 
 months_map = {"01":"January",
