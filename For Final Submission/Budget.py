@@ -10,12 +10,13 @@ import pymysql
 /*
  *	Budget.py  Atta-Boakye, Park, Shoaib  Virginia Tech  Dec. 7, 2022
  *	
+*           (Required)
  *	This is the main executable script file that is to be run on a local terminal.
  *	This file connects to the database where user data/information is stored.
  * 	The file then displays user data on the default executable page with a graph displaying
  *	the total budget spent/available during the current month.
- *  User interaction allows them to view different 'pages' and view different graphs such as
- *  subscription/expenses.
+ *          User interaction allows them to view different 'pages' and view different graphs such as
+ *          subscription/expenses.
  *	For the purpose of this project, Shoaib's web subscription data has been monitored and 
  * 	used.
  *	Shoaib has contributed with data retrieval and GUI
