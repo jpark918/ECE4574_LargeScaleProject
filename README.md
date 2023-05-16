@@ -105,3 +105,8 @@ something about ten times as involved as one of the homework assignments.
 Note that each team member submits something for each deliverable. In most
 cases they are the same, but don’t fail to submit your work.
 You are encouraged to rename your team if you wish.
+
+
+Overview:
+We are creating an expense tracker where users can keep track of how they are spending their monthly income. The main goal is to have set goals for spending monthly that we can monitor. We will keep track of spending on a month to month basis which will help adjust monthly spending goals. We wanted to do this as a group because as young adults, keeping track of where our money is going is essential. We want to have fun but at the same time make sure we have enough for important expenses. People may use excel to do all these expense tracking, but our software will generate the graphs as data is given and help users adjust their expense plans. 
+WireShark has been used in order to keep track of the users' URL visits. Initially, the project was to be built on the C++ language and libraries through qt creator since we wanted the end product to have an interactive GUI, however, we switched over to Python, after having many difficulties with C++, as we saw that python had many helpful libraries that made connections to the database much easier to manage. The downside was that the QT Widget implementation became a lot more difficult without the drag/drop UI. The UI was still kept from C++ and was imported into our python code. The AWS databse was used in order to have a relational database, as the tables are all joined by customer ID and this would make querying more simple.
