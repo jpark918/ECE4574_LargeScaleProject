@@ -1,4 +1,4 @@
-Specification: 
+## <br> Specification: </br>
 For the semester-long course project, I want you to develop a software system for an
 engineering application or use. As an Engineering application, your project should involve
 some form of control, data analysis, computation, performance requirements (throughput
@@ -6,84 +6,84 @@ or accuracy, for example) or other engineering aspect. You are working in teams 
 four; the teams will be assigned in Canvas as Groups.
 For this project, you MUST use the scrum methodology as I have explained it. Of course,
 there are variants of scrum in use, but it’s required that you use the following approaches:
-a) Product backlog and sprint backlogs
-b) Three 3-week sprints
-c) Scrum meetings (for this course, I am OK if you only have three actual meetings per
+<br> a) Product backlog and sprint backlogs </br>
+<br> b) Three 3-week sprints </br>
+<br> c) Scrum meetings (for this course, I am OK if you only have three actual meetings per
 week, to ask the three questions, but exchange status by email on other days of the
-working week).
-d) Sprint wrap-ups and retrospectives
-e) Most importantly, incremental deliverables at the end of each sprint
+working week). </br>
+<br> d) Sprint wrap-ups and retrospectives </br>
+<br> e) Most importantly, incremental deliverables at the end of each sprint </br>
 Here are the important due dates, and some information on what I am looking for:
- Project Proposal – Group assignment
- 25 points; the Scrum Master submits on behalf of the team
- A single Word document containing the following information:
-• Team name, names of members and title of project
-• Name of the designated Scrum master
-♦ Which team member will run the meetings and make sure everything is
-recorded?
-• One-half to one page description of the desired result (the completed
-project), its use and why you want to do it
-• Project backlog: the list of requirements for the entire system
-♦ Include both functional (what the code will do) and non-functional
+<br>  Project Proposal – Group assignment </br>
+<br>  25 points; the Scrum Master submits on behalf of the team </br>
+<br>  A single Word document containing the following information: </br>
+<br> • Team name, names of members and title of project </br>
+<br> • Name of the designated Scrum master </br>
+<br> ♦ Which team member will run the meetings and make sure everything is
+recorded? </br>
+<br> • One-half to one page description of the desired result (the completed
+project), its use and why you want to do it </br>
+<br> • Project backlog: the list of requirements for the entire system </br>
+<br> ♦ Include both functional (what the code will do) and non-functional </br>
 requirements (for example, what language(s), what platforms or APIs,
 what data, etc.)
-♦ Use good form for your requirements (“As an Administrator, I want to be
+<br> ♦ Use good form for your requirements (“As an Administrator, I want to be
 able to change user’s account details so that users whose role changes
-won’t have improper access”)
-♦ Remember to include priority
-• Your sprint backlog for sprint 1
-♦ What requirements will you tackle in the first sprint, who will do them in
-what order
-• What tools and/or communication methods will you use to track your work
-♦ git for code control? Slack, a Wiki or something else for communication?
-Email?
+won’t have improper access”) </br>
+<br> ♦ Remember to include priority </br>
+<br> • Your sprint backlog for sprint 1 </br>
+<br> ♦ What requirements will you tackle in the first sprint, who will do them in
+what order </br>
+<br> • What tools and/or communication methods will you use to track your work </br>
+<br> ♦ git for code control? Slack, a Wiki or something else for communication?
+Email?  </br>
 
- Due Monday, September 5 at 11:59 PM
- Sprint 1 wrap-up report – Group assignment
- 20 points; the Scrum Master submits a single document for the team, containing:
-• Sprint wrap-up: address each item on the sprint backlog: did you get it done?
-How did it go? Any changes to the product backlog? This is best done by
-adding a “disposition” column to the sprint backlog.
+<br>  Due Monday, September 5 at 11:59 PM </br>
+<br>  Sprint 1 wrap-up report – Group assignment </br>
+<br>  20 points; the Scrum Master submits a single document for the team, containing: </br>
+<br> • Sprint wrap-up: address each item on the sprint backlog: did you get it done? </br>
+<br> How did it go? Any changes to the product backlog? This is best done by 
+adding a “disposition” column to the sprint backlog. </br>
 
-• Sprint retrospective: any changes needed to how you are doing things?
-• Your sprint backlog for sprint 2
- Due October 3 at 11:59 PM
- Sprint 2 wrap-up report – Group assignment
-• 20 points; the Scrum Master submits a single document for the team,
-containing:
-• Sprint wrap-up: address each item on the sprint backlog: did you get it done?
-How did it go? Any changes to the product backlog?
-• Sprint retrospective: any changes needed to how you are doing things?
-• Your sprint backlog for sprint 3
- Due October 24 at 11:59 PM
- Sprint 3 wrap-up report – Group assignment
-• 20 points; the Scrum Master submits a single document for the team,
-containing:
-• Sprint wrap-up: address each item on the sprint backlog: did you get it done?
-How did it go? Any changes to the product backlog?
-• Sprint retrospective: any changes needed to how you are doing things?
- Due November 14 at 11:59 PM
- Brief project presentation
- 25 points; all team members participate equally
- Walk through and ideally demonstrate your project
- I would like 3-6 slides to use as a framework for your presentation
- These will be submitted via Canvas by December 1; all team members submit the
-same
- Occurs on November 30 or December 5 during class
- Project final report
- 50 points; each team member submits their own report
- The final report should contain:
-• A one-page executive summary of your final deliverable
-♦ What does it do? How is it used? What are the benefits from its use?
-• Summarize the project:
-♦ How did the final deliverable work out? Many differences from what you
-planned?
-♦ Your reflection on the process of doing the project: methodology,
-teamwork, anything
-• A copy of all code written in your project, pasted in plain-text as an appendix
-• An attached zip file of all of your code (source and project files only, no
+<br> • Sprint retrospective: any changes needed to how you are doing things? </br>
+<br> • Your sprint backlog for sprint 2 </br>
+<br>  Due October 3 at 11:59 PM </br>
+<br>  Sprint 2 wrap-up report – Group assignment </br>
+<br> • 20 points; the Scrum Master submits a single document for the team,
+containing: </br>
+<br> • Sprint wrap-up: address each item on the sprint backlog: did you get it done?
+How did it go? Any changes to the product backlog? </br>
+<br> • Sprint retrospective: any changes needed to how you are doing things? </br>
+<br> • Your sprint backlog for sprint 3 </br>
+<br> Due October 24 at 11:59 PM </br>
+<br>  Sprint 3 wrap-up report – Group assignment </br>
+<br> • 20 points; the Scrum Master submits a single document for the team,
+containing: </br>
+<br> • Sprint wrap-up: address each item on the sprint backlog: did you get it done?
+How did it go? Any changes to the product backlog? </br>
+<br>• Sprint retrospective: any changes needed to how you are doing things? </br>
+<br>  Due November 14 at 11:59 PM </br>
+<br>  Brief project presentation </br>
+<br>  25 points; all team members participate equally </br>
+<br>  Walk through and ideally demonstrate your project </br>
+<br>  I would like 3-6 slides to use as a framework for your presentation </br>
+<br>  These will be submitted via Canvas by December 1; all team members submit the
+same </br>
+<br>  Occurs on November 30 or December 5 during class </br>
+<br>  Project final report </br>
+<br>  50 points; each team member submits their own report </br>
+<br>  The final report should contain: </br>
+<br> • A one-page executive summary of your final deliverable </br>
+<br> ♦ What does it do? How is it used? What are the benefits from its use? </br>
+<br> • Summarize the project: </br>
+<br> ♦ How did the final deliverable work out? Many differences from what you
+planned? </br>
+<br> ♦ Your reflection on the process of doing the project: methodology,
+teamwork, anything </br>
+<br> • A copy of all code written in your project, pasted in plain-text as an appendix </br>
+<br> • An attached zip file of all of your code (source and project files only, no
 compiled code or libraries). Of course, all team members submit the same
-code.
+code. </br>
  Due December 7 at 11:59 PM
 
 IMPORTANT NOTES:
